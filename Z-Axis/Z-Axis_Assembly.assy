@@ -1,0 +1,138 @@
+links:
+  # Stepper motor
+  - part: Z-Axis\StepperNema23 v1
+  # Adding 4 spacers
+  - part: Z-Axis\Z-Motor Spacer v1
+    name: motor_spacer_1
+    connect:
+      with: m5.5-thru
+      withInstance: m5.5_1
+      name: Z-Axis\StepperNema23 v1
+      to: m5.5-thru
+      toInstance: TL
+  - part: Z-Axis\Z-Motor Spacer v1
+    name: motor_spacer_2
+    connect:
+      with: m5.5-thru
+      withInstance: m5.5_1
+      name: Z-Axis\StepperNema23 v1
+      to: m5.5-thru
+      toInstance: TR
+  - part: Z-Axis\Z-Motor Spacer v1
+    name: motor_spacer_3
+    connect:
+      with: m5.5-thru
+      withInstance: m5.5_1
+      name: Z-Axis\StepperNema23 v1
+      to: m5.5-thru
+      toInstance: BL
+  - part: Z-Axis\Z-Motor Spacer v1
+    name: motor_spacer_4
+    connect:
+      with: m5.5-thru
+      withInstance: m5.5_1
+      name: Z-Axis\StepperNema23 v1
+      to: m5.5-thru
+      toInstance: BR
+  
+  # 4 spacers connect the motor to nema plate
+  - part: Z-Axis\Nema-Plate
+    connect:
+        with: m5.5-thru
+        withInstance: BR
+        name: motor_spacer_1
+        to: m5.5-thru
+        toInstance: m5.5_2
+  # proximity sensor attached to the nema plate by screw
+  - part:  Z-Axis\Proximity Sensor v1
+    connect:
+        withInstance: m8-screw-52
+        name: Z-Axis\Nema-Plate
+        to: "/pub/std/metric/m:m8-thru"
+        toInstance: m8-hole-sensor
+  
+  - part: Z-Axis\Bearing Backplate
+    connect:
+      with: "/pub/std/metric/m:m5-hole-20"
+      withParams:
+        turnZ: 270
+      withInstance: side-hole-5 
+      name: Z-Axis\Nema-Plate
+      to: "/pub/std/metric/m:m5-thru"
+      toInstance: m5-hole-1
+
+  - part: Z-Axis\Z_Bearing Stand Off
+    connect:
+      with: "/pub/std/metric/m:m5-thru"
+      withParams:
+        turnZ: 90
+      withInstance: m5-top-1-1
+      name: Z-Axis\Bearing Backplate
+      to: "/pub/std/metric/m:m5-thru-5"
+      toInstance: m5-bottom-1-1
+  - part: Z-Axis\Z_Bearing Stand Off
+    connect:
+      with: "/pub/std/metric/m:m5-thru"
+      withParams:
+        turnZ: 90
+      withInstance: m5-top-1-1
+      name: Z-Axis\Bearing Backplate
+      to: "/pub/std/metric/m:m5-thru-5"
+      toInstance: m5-top-1-1
+
+  - part:  Z-Axis\Z-Axis Linear Rail v1
+    connect:
+      with: "/pub/std/metric/m:m6-thru-5"
+      withParams:
+        turnZ: 270
+      withInstance: m6-cb-1
+      name: Z-Axis\Bearing Backplate
+      to: "/pub/std/metric/m:m6-thru"
+      toInstance:  m6-lin-rail-left-1
+  - part:  Z-Axis\Z-Axis Linear Rail v1
+    connect:
+      with: "/pub/std/metric/m:m6-thru-5"
+      withParams:
+        turnZ: 270
+      withInstance: m6-cb-1
+      name: Z-Axis\Bearing Backplate
+      to: "/pub/std/metric/m:m6-thru"
+      toInstance:  m6-lin-rail-right-1
+
+  - part:  Z-Axis\BK12 End Stop v1
+    connect:
+      with: m6.5-thru
+      withParams:
+        turnZ: 90
+      withInstance: m6.5-BK12-hole-BR
+      name: Z-Axis\Bearing Backplate
+      to: m6.5-thru
+      toInstance: m6.5-BK12-hole-BR
+
+  - part:  Z-Axis\BF12 End Stop v1
+    connect:
+      with: m6.5-thru
+      withParams:
+        turnZ: 90
+      withInstance: m6.5-BF12-hole-R
+      name: Z-Axis\Bearing Backplate
+      to: m6.5-thru
+      toInstance: m6.5-BF12-hole-R
+
+  - part:  Z-Axis\y-axis_ball_nut v1
+    connect:
+      with: "/pub/std/metric/m:m5-threaded-hole-16"
+      withInstance: TR
+      name: Z-Axis\Bearing Backplate
+      to: "/pub/std/metric/m:m5-threaded-hole-10"
+      toInstance:  y-axis-ball-nut-hole-1-1
+
+  - part: Z-Axis\Air Splitter Bracket v1
+    connect:
+      with: "/pub/std/metric/m:m6-threaded-thru"
+      withParams:
+        turnZ: 270
+      withInstance: L
+      name: Z-Axis\Bearing Backplate
+      to: "/pub/std/metric/m:m5-threaded-hole-10"
+      toInstance:  air-splitter-bracket-hole-L
