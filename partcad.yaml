@@ -13,17 +13,40 @@ import:
     url: https://github.com/openvmp/partcad-index.git
 
 sketches:
+  rectangle-slide-area:
+    type: basic
+    rectangle:
+      side-x: 14.6
+      side-y: 77.50
   m5.5:
     type: basic
     circle: 2.75
   m6.5:
     type: basic
     circle: 3.25
+  m7.5:
+    type: basic
+    circle: 3.75
   m8:
     type: basic
     circle: 4
+  circle-80D:
+    type: basic
+    circle: 40
+  circle-70D:
+    type: basic
+    circle: 35
 
 interfaces:
+  slider-interface:
+    desc: slider surface for linera bearings
+    parameters:
+      turnZ:
+        min: 0
+        max: 360
+    ports:
+      slider-surface:
+        sketch: rectangle-slide-area
   m5.5:
     desc: Abstract 5.5mm circular interface
     abstract: true
@@ -33,8 +56,9 @@ interfaces:
   m5.5-thru:
     inherits:
       m5.5: hole
-
   m5-threaded-hole-15:
+    inherits: "/pub/std/metric/m:m5"
+  m5-CB8-thru:
     inherits: "/pub/std/metric/m:m5"
   m6.5:
     desc: Abstract 6.5mm circular interface
@@ -50,6 +74,20 @@ interfaces:
   m6.5-thru:
     inherits:
       m6.5: hole
+
+  m7.5:
+    desc: Abstract 7.5mm circular interface
+    abstract: true
+    ports:
+      m7.5:
+        sketch: m7.5
+  m7.5-thru:
+    inherits:
+      m7.5: hole
+    parameters:
+      moveZ:
+        min: 10
+        max: 20
 
   m8:
     desc: Abstract 8mm circular interface
@@ -71,6 +109,13 @@ interfaces:
     inherits:
       m8-bar: 20mm-long
 
+  m10-bar-15:
+    inherits:
+      "/pub/std/metric/m:m10": 15mm long m10 bar
+  m10-thru-13:
+    inherits:
+      "/pub/std/metric/m:m10-thru": 13mm long m10 hole
+
   StepperMotorMount:
     inherits:
       m5.5-thru:
@@ -82,6 +127,18 @@ interfaces:
     inherits:
       StepperMotorMount:
       m8-bar-20: [[0.0, 0.0, 71], [0.0, 0.0, 1.0], 0.0]
+  spindle-80D:
+    ports:
+      hole-80D:
+        sketch: circle-80D
+    parameters:
+      moveZ:
+        min: -200
+        max: 200
+  cnc-bracketHead-70D:
+    ports:
+      hole-70D:
+        sketch: circle-70D
 
 parts:
   Z-Axis\StepperNema23 v1:
@@ -120,7 +177,7 @@ parts:
         y-axis-ball-nut-hole-2-2: [[12.00, 10, -105.00], [1.0, 0.0, 0.0], 90.0]
 
         air-splitter-bracket-hole-L: [[-27.00, 10, 30.00], [1.0, 0.0, 0.0], 90.0]
-        air-splitter-bracket-hole-R: [[ 27.00, 10, 30.00], [1.0, 0.0, 0.0], 90.0]
+        air-splitter-bracket-hole-R: [[27.00, 10, 30.00], [1.0, 0.0, 0.0], 90.0]
 
       # 5 holes on side 
       "/pub/std/metric/m:m5-hole-20":
@@ -130,8 +187,8 @@ parts:
         side-hole-4: [[34.00, 5.00, 175.00], [1.0, 0.0, 180.0], 0]
         side-hole-5: [[68.00, 5.00, 175.00], [1.0, 0.0, 180.0], 0]
 
-      "/pub/std/metric/m:m5-thru-5":
-      # M5 CounterBore, 2 sets of 4x2 array
+      m5-CB8-thru:
+        # M5 CounterBore, 2 sets of 4x2 array
         # bearingBackplate_top - row 1
         m5-top-1-1: [[-60.50, 10, -4], [1.0, 0.0, 0.0], 90.0]
         m5-top-1-2: [[-24.50, 10, -4], [1.0, 0.0, 0.0], 90.0]
@@ -153,6 +210,7 @@ parts:
         m5-bottom-2-2: [[-24.50, 10, -166], [1.0, 0.0, 0.0], 90.0]
         m5-bottom-2-3: [[24.50, 10, -166], [1.0, 0.0, 0.0], 90.0]
         m5-bottom-2-4: [[60.50, 10, -166], [1.0, 0.0, 0.0], 90.0]
+
       "/pub/std/metric/m:m6-thru":
       # Liner Railing 6 holes per side
         m6-lin-rail-left-1: [[-65.00, 0, 150.00], [1.0, 0.0, 0.0], 270.0]
@@ -178,11 +236,11 @@ parts:
       # 2 holes for BK12 Screw End
         m6.5-BF12-hole-L: [[-23.00, 0, -150.00], [1.0, 0.0, 0.0], 270.0]
         m6.5-BF12-hole-R: [[23.00, 0, -150.00], [1.0, 0.0, 0.0], 270.0]
-
   Z-Axis\Z_Bearing Stand Off:
     type: step
     implements:
       "/pub/std/metric/m:m5-thru":
+        # To Base
         # row 1
         m5-top-1-1: [[642.754, -156.819, 102.00], [1, 0, 0], 90]
         m5-top-1-2: [[678.754, -156.819, 102.00], [1, 0, 0], 90]
@@ -193,6 +251,18 @@ parts:
         m5-bottom-1-1: [[678.754, -156.819, 134.00], [1, 0, 0], 90]
         m5-bottom-1-2: [[727.754, -156.819, 134.00], [1, 0, 0], 90]
         m5-bottom-1-3: [[763.754, -156.819, 134.00], [1, 0, 0], 90]
+
+        # To Bearings
+        # row 1
+        m5-ToBearing-top-1-1: [[642.754, -171.819, 102.00], [1, 0, 0], 90]
+        m5-ToBearing-top-1-2: [[678.754, -171.819, 102.00], [1, 0, 0], 90]
+        m5-ToBearing-top-1-3: [[727.754, -171.819, 102.00], [1, 0, 0], 90]
+        m5-ToBearing-top-1-4: [[763.754, -171.819, 102.00], [1, 0, 0], 90]
+        # row 2
+        m5-ToBearing-bottom-1-1: [[642.754, -171.819, 134.00], [1, 0, 0], 90]
+        m5-ToBearing-bottom-1-2: [[678.754, -171.819, 134.00], [1, 0, 0], 90]
+        m5-ToBearing-bottom-1-3: [[727.754, -171.819, 134.00], [1, 0, 0], 90]
+        m5-ToBearing-bottom-1-4: [[763.754, -171.819, 134.00], [1, 0, 0], 90]
   Z-Axis\Z-Axis Linear Rail v1:
     type: step
     implements:
@@ -203,6 +273,8 @@ parts:
         m6-cb-4: [[-13.206, 145.00, -5.16], [1, 0, 0], 180]
         m6-cb-5: [[-13.206, 85.00, -5.16], [1, 0, 0], 180]
         m6-cb-6: [[-13.206, 25.00, -5.16], [1, 0, 0], 180]
+      slider-interface: 
+        slider: [[-13.206, 175, -22.66], [1, 0, 0], 180]
   Z-Axis\BK12 End Stop v1:
     type: step
     implements:
@@ -219,7 +291,6 @@ parts:
         # 2 holes for BK12 Screw End
         m6.5-BF12-hole-L: [[-23.00, -21.50, 10], [1.0, 0.0, 0.0], 270.0]
         m6.5-BF12-hole-R: [[23.00, -21.50, 10], [1.0, 0.0, 0.0], 270.0]
-
   Z-Axis\y-axis_ball_nut v1:
     type: step
     implements:
@@ -229,16 +300,104 @@ parts:
         TR: [[20.00, -20.00, 32], [1.0, 0.0, 0.0], 270.0]
         BL: [[-20.00, -20.00, 8], [1.0, 0.0, 0.0], 270.0]
         BR: [[20.00, -20.00, 8], [1.0, 0.0, 0.0], 270.0]
-
   Z-Axis\Air Splitter Bracket v1:
     type: step
     implements:
-      "/pub/std/metric/m:m6-threaded-thru": 
-        L: [[ 27.00, 6.00, -15.25], [1.0, 0.0, 0.0], 0.0]
+      "/pub/std/metric/m:m6-threaded-thru":
+        L: [[27.00, 6.00, -15.25], [1.0, 0.0, 0.0], 0.0]
         R: [[-27.00, 6.00, -15.25], [1.0, 0.0, 0.0], 0.0]
-
   Z-Axis\Coupler v1:
     type: step
+    implements:
+      m7.5-thru:
+        T: [[0, 0, 30], [1.0, 0.0, 0.0], 0.0]
+      m10-thru-13:
+        B: [[0, 0, 0], [1.0, 0.0, 0.0], 0.0]
+  Z-Axis\Ball Screw Z-Axis v1:
+    type: step
+    implements:
+      m10-bar-15:
+        motor-side: [[196.50, 0, 0], [0.0, 1.0, 0.0], 270.0]
+        other-side: [[-153.50, 0, 0], [0.0, 1.0, 0.0], 90.0]
+  Z-Axis\Motor Plate:
+    type: step
+    implements:
+      m5-CB8-thru:
+        # M5 CounterBore, 2 sets of 4x2 array
+        # bearingBackplate_top - row 1
+        m5-1-1: [[81.00, 10, 75.50], [1.0, 0.0, 0.0], 90.0]
+        m5-1-2: [[81.00, 10, 39.50], [1.0, 0.0, 0.0], 90.0]
+        m5-1-3: [[81.00, 10, -9.50], [1.0, 0.0, 0.0], 90.0]
+        m5-1-4: [[81.00, 10, -45.50], [1.0, 0.0, 0.0], 90.0]
+         # bearingBackplate_top - row 2
+        m5-2-1: [[49.00, 10, 75.50], [1.0, 0.0, 0.0], 90.0]
+        m5-2-2: [[49.00, 10, 39.50], [1.0, 0.0, 0.0], 90.0]
+        m5-2-3: [[49.00, 10, -9.50], [1.0, 0.0, 0.0], 90.0]
+        m5-2-4: [[49.00, 10, -45.50], [1.0, 0.0, 0.0], 90.0]
+
+       # bearingBackplate_bottom - row 1
+        m5-3-1: [[-49.00, 10, 75.50], [1.0, 0.0, 0.0], 90.0]
+        m5-3-2: [[-49.00, 10, 39.50], [1.0, 0.0, 0.0], 90.0]
+        m5-3-3: [[-49.00, 10, -9.50], [1.0, 0.0, 0.0], 90.0]
+        m5-3-4: [[-49.00, 10, -45.50], [1.0, 0.0, 0.0], 90.0]
+         # bearingBackplate_bottom - row 2
+        m5-4-1: [[-81.00, 10, 75.50], [1.0, 0.0, 0.0], 90.0]
+        m5-4-2: [[-81.00, 10, 39.50], [1.0, 0.0, 0.0], 90.0]
+        m5-4-3: [[-81.00, 10, -9.50], [1.0, 0.0, 0.0], 90.0]
+        m5-4-4: [[-81.00, 10, -45.50], [1.0, 0.0, 0.0], 90.0]
+      "/pub/std/metric/m:m8-thru":
+          # Spindele Motor Holder 3 x 2 holes
+        spindleHolder-L-1: [[-64.75, 0, -35.00], [1.0, 0.0, 0.0], 90.0]
+        spindleHolder-L-2: [[-64.75, 0, -60.00], [1.0, 0.0, 0.0], 90.0]
+        spindleHolder-L-3: [[-64.75, 0, -85.00], [1.0, 0.0, 0.0], 90.0]
+        spindleHolder-R-1: [[64.75, 0, -35.00], [1.0, 0.0, 0.0], 90.0]
+        spindleHolder-R-2: [[64.75, 0, -60.00], [1.0, 0.0, 0.0], 90.0]
+        spindleHolder-R-3: [[64.75, 0, -85.00], [1.0, 0.0, 0.0], 90.0]
+      "/pub/std/metric/m:m5-thru":
+          # Screw connector
+        TL: [[-20, 10, 12], [1.0, 0.0, 0.0], 90.0]
+        TR: [[20, 10, 12], [1.0, 0.0, 0.0], 90.0]
+        BL: [[-20, 10, -12], [1.0, 0.0, 0.0], 90.0]
+        BR: [[20, 10, -12], [1.0, 0.0, 0.0], 90.0]
+  Z-Axis\HGH20CAZ0C v1:
+    type: step
+    implements:
+      # Hole Diameter- 4.2
+      "/pub/std/metric/m:m5-screw-6":
+        TL: [[362.792, 350.565, 329.321], [1.0, 0.0, 0.0], 90.0]
+        BL: [[362.792, 350.565, 293.321], [1.0, 0.0, 0.0], 90.0]
+        TR: [[394.792, 350.565, 329.321], [1.0, 0.0, 0.0], 90.0]
+        BR: [[394.792, 350.565, 293.321], [1.0, 0.0, 0.0], 90.0]
+      slider-interface: 
+        slider: [[378.65, 363.065, 311.30], [1.0, 0.0, 0.0], 270.0]
+  Z-Axis\Spindle Mount v1:
+    type: step
+    implements:
+      "/pub/std/metric/m:m8-thru":
+        # Spindele Motor Holder 3 x 2 holes
+        spindleHolder-L-1: [[-64.75, 51.00, 64.00], [1.0, 0.0, 0.0], 270.0]
+        spindleHolder-L-2: [[-64.75, 51.00, 39.00], [1.0, 0.0, 0.0], 270.0]
+        spindleHolder-L-3: [[-64.75, 51.00, 14.00], [1.0, 0.0, 0.0], 270.0]
+        spindleHolder-R-1: [[64.75, 51.00, 64.00], [1.0, 0.0, 0.0], 270.0]
+        spindleHolder-R-2: [[64.75, 51.00, 39.00], [1.0, 0.0, 0.0], 270.0]
+        spindleHolder-R-3: [[64.75, 51.00, 14.00], [1.0, 0.0, 0.0], 270.0]
+      spindle-80D:
+        motor-hole: [[0, 0, 0], [1.0, 0.0, 0.0], 0.0]
+  Z-Axis\Spindle v1:
+    type: step
+    implements:
+      spindle-80D:
+        splindle-motor: [[0, 0, 0], [1.0, 0.0, 0.0], 180.0]
+      cnc-bracketHead-70D: [[0, 0, 0], [1.0, 0.0, 0.0], 180.0]
+  Z-Axis\CNC_Air_Bracket v1:
+    type: step
+    implements:
+      cnc-bracketHead-70D: [[0, 0, 25], [1.0, 0.0, 0.0], 0.0]
+  Z-Axis\Air Line Support v1:
+    type: step
+    implements:
+      spindle-80D: [[0, 0, 0], [1.0, 0.0, 0.0], 180.0]
+
 assemblies:
   Z-Axis\Z-Axis_Assembly:
     type: assy
