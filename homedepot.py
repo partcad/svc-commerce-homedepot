@@ -73,6 +73,14 @@ def get_cookies(cookie_jar, cookie_dict):
         cookie_dict[cookie.name] = cookie.value
     return cookie_dict
 
+def construct_headers():
+        return {**headers, "user-agent": f"partcad/{partcad_version}", "cookie": cookies_string}
+    
+def update_cookies(response_cookies):
+    updated_cookies = get_cookies(response_cookies, cookies_dict)
+    return ";".join(f"{k}={v}" for k, v in updated_cookies.items())
+
+
 def get_product_id(sku):
     """
     Retrieve the product ID corresponding to the provided SKU from Home Depot's website.
@@ -92,33 +100,36 @@ def get_product_id(sku):
     global cookies_dict
 
     url = f"https://www.homedepot.com/s/{sku}"
+    response = session.get(url, headers=construct_headers())
 
-    response = session.get(url, headers={**headers, "user-agent": "partcad/" + partcad_version, "cookie": cookies_string})
-
-    if response.url == url:
-        try:
-            pq = PyQuery(response.text)
-            
-            # Find the <script> tag with type="application/ld+json"
-            script_tag = pq('script[type="application/ld+json"]')
-
-            data = json.loads(script_tag.text())
-            url = data[0]["mainEntity"]["offers"]["itemOffered"][0]["offers"]["url"]
-        except:
-            sys.stderr.write(
-                "Failed to get Product ID from SKU\n"
-            )
-            raise Exception("Failed to get Product ID from SKU")
-    else:
-        url = response.url
-
-    cookies_dict = get_cookies(response.cookies, cookies_dict)
-    cookies_string = ""
-    for cookie in cookies_dict.items():
-        cookies_string += f"{cookie[0]}={cookie[1]};"
-    cookies_string = cookies_string[:-1]
-
-    return url.split("/")[-1]
+    # Check if redirected
+    if response.url != url:
+        cookies_string = update_cookies(response.cookies)
+        return response.url.split("/")[-1]
+    
+    # Try the product page URL
+    url = f"https://www.homedepot.com/p/{sku}"
+    product_response = session.get(url, headers=construct_headers())
+    
+    if product_response.url != url:
+        cookies_string = update_cookies(product_response.cookies)
+        return product_response.url.split("/")[-1]
+    
+    # Parse JSON-LD script for product URL
+    try:
+        pq = PyQuery(response.text)
+        script_tag = pq('script[type="application/ld+json"]')
+        if not script_tag:
+            raise ValueError("No JSON-LD script tag found")
+        
+        data = json.loads(script_tag.text())
+        p_url = data[0]["mainEntity"]["offers"]["itemOffered"][0]["offers"]["url"]
+    except (KeyError, IndexError, json.JSONDecodeError) as e:
+        sys.stderr.write(f"Error parsing JSON-LD: {e}\n")
+        raise Exception("Failed to get Product ID from SKU")
+    
+    cookies_string = update_cookies(response.cookies)
+    return p_url.split("/")[-1]
 
 
 def get_quote(product_id, item_count):

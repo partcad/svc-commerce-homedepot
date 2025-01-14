@@ -50,6 +50,19 @@ parts:
     count_per_sku: 2
     url: https://www.homedepot.com/p/Crown-Bolt-M4-0-7-x-20-mm-Zinc-Plated-Hex-Bolts-2-Pieces-35578/202209645
     type: step # This model is sourced from https://grabcad.com/library/hexagonal-bolt-m4-m5-m6-1
+
+  dimensional-lumber:
+    desc: Vertical 2x4
+    vendor: homedepot
+    sku: "202083072"
+    count_per_sku: 1
+    url: https://www.homedepot.com/p/2-in-x-4-in-x-20-ft-2-Premium-Grade-Hem-Fir-Dimensional-Lumber-82271/202083072
+    type: enrich
+    source: /pub/std/imperial/dimensional-lumber:lumber
+    with:
+      height: 2
+      width: 4
+    offset: [[0, 0, 0], [1, 0, 0], 90]
     
 assemblies:
   hardware/fasteners/fastener_assembly:
