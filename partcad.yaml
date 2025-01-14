@@ -273,7 +273,7 @@ parts:
         m6-cb-4: [[-13.206, 145.00, -5.16], [1, 0, 0], 180]
         m6-cb-5: [[-13.206, 85.00, -5.16], [1, 0, 0], 180]
         m6-cb-6: [[-13.206, 25.00, -5.16], [1, 0, 0], 180]
-      slider-interface: 
+      slider-interface:
         slider: [[-13.206, 175, -22.66], [1, 0, 0], 180]
   Z-Axis\BK12 End Stop v1:
     type: step
@@ -368,7 +368,7 @@ parts:
         BL: [[362.792, 350.565, 293.321], [1.0, 0.0, 0.0], 90.0]
         TR: [[394.792, 350.565, 329.321], [1.0, 0.0, 0.0], 90.0]
         BR: [[394.792, 350.565, 293.321], [1.0, 0.0, 0.0], 90.0]
-      slider-interface: 
+      slider-interface:
         slider: [[378.65, 363.065, 311.30], [1.0, 0.0, 0.0], 270.0]
   Z-Axis\Spindle Mount v1:
     type: step
@@ -398,6 +398,10 @@ parts:
     implements:
       spindle-80D: [[0, 0, 0], [1.0, 0.0, 0.0], 180.0]
 
+  
+
 assemblies:
   Z-Axis\Z-Axis_Assembly:
+    type: assy
+  X-Axis\X-Axis_Assembly:
     type: assy

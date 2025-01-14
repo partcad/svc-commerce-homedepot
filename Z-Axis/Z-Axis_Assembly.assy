@@ -1,5 +1,4 @@
 links:
-  # Stepper motor
   - part: Z-Axis\StepperNema23 v1
   - part: Z-Axis\Coupler v1
     connect:
@@ -18,7 +17,6 @@ links:
       name: Z-Axis\Coupler v1
       to: m10-thru-13
       toInstance: B
-  # Adding 4 spacers
   - part: Z-Axis\Z-Motor Spacer v1
     name: motor_spacer_1
     connect:
@@ -51,7 +49,6 @@ links:
       name: Z-Axis\StepperNema23 v1
       to: m5.5-thru
       toInstance: BR
-  # 4 spacers connect the motor to nema plate
   - part: Z-Axis\Nema-Plate
     connect:
         with: m5.5-thru
@@ -59,7 +56,6 @@ links:
         name: motor_spacer_1
         to: m5.5-thru
         toInstance: m5.5_2
-  # proximity sensor attached to the nema plate by screw
   - part:  Z-Axis\Proximity Sensor v1
     connect:
         withInstance: m8-screw-52
