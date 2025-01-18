@@ -1,3 +1,6 @@
+desc: Credits to thehardwareguy for the CAD design. For more details, visit the CNC page on their website  
+      https://www.thehardwareguy.co.uk/diy-cnc-machine
+
 import:
   # Add dependencies here
   #     <package-name>:
