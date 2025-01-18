@@ -1,0 +1,199 @@
+links:
+  - part: Common\StepperNema23 v1
+  - part: Common\Coupler v1
+    connect:
+      with: m7.5-thru
+      withParams:
+        moveZ: 15
+      withInstance: T
+      name: Common\StepperNema23 v1
+      to: m8-bar-20
+  - part: X-Axis\Ball Screw X-Axis v1
+    connect:
+      with: m10-bar-11
+      # withParams:
+      #   moveZ: -15
+      withInstance: motor-side
+      name: Common\Coupler v1
+      to: m10-thru-13
+      toInstance: B
+  - part: X-Axis\X-Motor Spacer v1
+    name: motor_spacer_1
+    connect:
+      with: m5.5-thru
+      withInstance: m5.5_1
+      name: Common\StepperNema23 v1
+      to: m5.5-thru
+      toInstance: TL
+  - part: X-Axis\X-Motor Spacer v1
+    name: motor_spacer_2
+    connect:
+      with: m5.5-thru
+      withInstance: m5.5_1
+      name: Common\StepperNema23 v1
+      to: m5.5-thru
+      toInstance: TR
+  - part: X-Axis\X-Motor Spacer v1
+    name: motor_spacer_3
+    connect:
+      with: m5.5-thru
+      withInstance: m5.5_1
+      name: Common\StepperNema23 v1
+      to: m5.5-thru
+      toInstance: BL
+  - part: X-Axis\X-Motor Spacer v1
+    name: motor_spacer_4
+    connect:
+      with: m5.5-thru
+      withInstance: m5.5_1
+      name: Common\StepperNema23 v1
+      to: m5.5-thru
+      toInstance: BR
+  - part: X-Axis\gantry_plate_left
+    name: gantry-left
+    connect:
+      with: "/pub/std/metric/m:m5-thru"
+      withParams:
+        turnZ: 180
+      withInstance: motor-TL
+      name: motor_spacer_1
+      to: m5.5-thru
+      toInstance: m5.5_2
+  - part: Common\Proximity Sensor v1
+    connect:
+        withInstance: m8-screw-52
+        name: gantry-left
+        to: "/pub/std/metric/m:m8-thru"
+        toInstance: m8-hole-sensor
+  - part: X-Axis\left_bearing_block
+    connect:
+      with: "/pub/std/metric/m:m8-thru"
+      withParams:
+        turnZ: 90
+      withInstance: m8-bearing-bock-1
+      name: gantry-left
+      to: "/pub/std/metric/m:m8-thru"
+      toInstance: m8-bearing-bock-5
+  - part: Z-Axis\y-axis_ball_nut v1
+    connect:
+      with: "/pub/std/metric/m:m5-threaded-hole-16"
+      withParams:
+        turnZ: 90
+      withInstance: TL
+      name: gantry-left
+      to: "/pub/std/metric/m:m5-thru"
+      toInstance: ball-nut-TL
+  - part: X-Axis\gantry_backplate
+    name: gantry_backplate
+    connect:
+      with:  m8-hole-30
+      withParams:
+        turnZ: 270
+      withInstance:  m8-backplate-L-1
+      name: gantry-left
+      to:  "/pub/std/metric/m:m8-thru"
+      toInstance:  m8-backplate-1
+  - part: Common\BK12 End Stop v1
+    connect:
+      with: m6.5-thru
+      withParams:
+        turnZ: 180
+      withInstance:  m6.5-BK12-hole-TL
+      name: gantry_backplate
+      to: m6.5-thru
+      toInstance: m6.5-BK12-hole-TL
+  - part: Common\BF12 End Stop v1
+    connect:
+      with: m6.5-thru
+      withInstance:  m6.5-BF12-hole-L
+      name: gantry_backplate
+      to: m6.5-thru
+      toInstance: m6.5-BF12-hole-L
+  - part: X-Axis\X-Axis Linear Rail v1
+    name: x-railing-1
+    connect:
+      with: m6-CB10-thru
+      withInstance:  m6-rail-hole-01
+      name: gantry_backplate
+      to: "/pub/std/metric/m:m6-thru"
+      toInstance: m6-rail-hole-01-T
+  - part: X-Axis\X-Axis Linear Rail v1
+    name: x-railing-2
+    connect:
+      with: m6-CB10-thru
+      withInstance:  m6-rail-hole-01
+      name: gantry_backplate
+      to: "/pub/std/metric/m:m6-thru"
+      toInstance: m6-rail-hole-01-B
+  - part: Common\HGH20CAZ0C v1
+    name: linBearing-1
+    connect: 
+      with: slider-interface
+      withInstance: slider
+      withParams:
+        turnZ: 270
+        moveY: 45
+      name: x-railing-1
+      to: slider-interface
+      toInstance: slider
+  - part: Common\HGH20CAZ0C v1
+    name: linBearing-2
+    connect: 
+      with: slider-interface
+      withInstance: slider
+      withParams:
+        turnZ: 270
+        moveY: -45
+      name: x-railing-1
+      to: slider-interface
+      toInstance: slider
+  - part: Common\HGH20CAZ0C v1
+    name: linBearing-3
+    connect: 
+      with: slider-interface
+      withInstance: slider
+      withParams:
+        turnZ: 270
+        moveY: 45
+      name: x-railing-2
+      to: slider-interface
+      toInstance: slider
+  - part: Common\HGH20CAZ0C v1
+    name: linBearing-4
+    connect: 
+      with: slider-interface
+      withInstance: slider
+      withParams:
+        turnZ: 270
+        moveY: -45
+      name: x-railing-2
+      to: slider-interface
+      toInstance: slider
+  - part: X-Axis\gantry_plate_right
+    name: gantry-right
+    connect:
+      with:  "/pub/std/metric/m:m8-thru"
+      withParams:
+        turnZ: 270
+      withInstance:  m8-backplate-1
+      name: gantry_backplate
+      to:  m8-hole-30
+      toInstance: m8-backplate-R-1
+  - part: Z-Axis\y-axis_ball_nut v1
+    connect:
+      with: "/pub/std/metric/m:m5-threaded-hole-16"
+      withParams:
+        turnZ: 270
+      withInstance: TL
+      name: gantry-right
+      to: "/pub/std/metric/m:m5-thru"
+      toInstance: ball-nut-TR
+  - part: X-Axis\right_bearing_block
+    connect:
+      with: "/pub/std/metric/m:m8-thru"
+      withParams:
+        turnZ: 270
+      withInstance: m8-bearing-bock-1
+      name: gantry-right
+      to: "/pub/std/metric/m:m8-thru"
+      toInstance: m8-bearing-bock-1
