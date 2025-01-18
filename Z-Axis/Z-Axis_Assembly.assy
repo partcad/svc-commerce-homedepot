@@ -1,12 +1,12 @@
 links:
-  - part: Z-Axis\StepperNema23 v1
-  - part: Z-Axis\Coupler v1
+  - part: Common\StepperNema23 v1
+  - part: Common\Coupler v1
     connect:
       with: m7.5-thru
       withParams:
         moveZ: 15
       withInstance: T
-      name: Z-Axis\StepperNema23 v1
+      name: Common\StepperNema23 v1
       to: m8-bar-20
   - part: Z-Axis\Ball Screw Z-Axis v1
     connect:
@@ -14,7 +14,7 @@ links:
       withParams:
         moveZ: -15
       withInstance: motor-side
-      name: Z-Axis\Coupler v1
+      name: Common\Coupler v1
       to: m10-thru-13
       toInstance: B
   - part: Z-Axis\Z-Motor Spacer v1
@@ -22,7 +22,7 @@ links:
     connect:
       with: m5.5-thru
       withInstance: m5.5_1
-      name: Z-Axis\StepperNema23 v1
+      name: Common\StepperNema23 v1
       to: m5.5-thru
       toInstance: TL
   - part: Z-Axis\Z-Motor Spacer v1
@@ -30,7 +30,7 @@ links:
     connect:
       with: m5.5-thru
       withInstance: m5.5_1
-      name: Z-Axis\StepperNema23 v1
+      name: Common\StepperNema23 v1
       to: m5.5-thru
       toInstance: TR
   - part: Z-Axis\Z-Motor Spacer v1
@@ -38,7 +38,7 @@ links:
     connect:
       with: m5.5-thru
       withInstance: m5.5_1
-      name: Z-Axis\StepperNema23 v1
+      name: Common\StepperNema23 v1
       to: m5.5-thru
       toInstance: BL
   - part: Z-Axis\Z-Motor Spacer v1
@@ -46,7 +46,7 @@ links:
     connect:
       with: m5.5-thru
       withInstance: m5.5_1
-      name: Z-Axis\StepperNema23 v1
+      name: Common\StepperNema23 v1
       to: m5.5-thru
       toInstance: BR
   - part: Z-Axis\Nema-Plate
@@ -56,7 +56,7 @@ links:
         name: motor_spacer_1
         to: m5.5-thru
         toInstance: m5.5_2
-  - part:  Z-Axis\Proximity Sensor v1
+  - part: Common\Proximity Sensor v1
     connect:
         withInstance: m8-screw-52
         name: Z-Axis\Nema-Plate
@@ -109,7 +109,7 @@ links:
       name: Z-Axis\Bearing Backplate
       to: "/pub/std/metric/m:m6-thru"
       toInstance:  m6-lin-rail-right-1
-  - part: Z-Axis\BK12 End Stop v1
+  - part: Common\BK12 End Stop v1
     connect:
       with: m6.5-thru
       withParams:
@@ -118,7 +118,7 @@ links:
       name: Z-Axis\Bearing Backplate
       to: m6.5-thru
       toInstance: m6.5-BK12-hole-BR
-  - part: Z-Axis\BF12 End Stop v1
+  - part: Common\BF12 End Stop v1
     connect:
       with: m6.5-thru
       withParams:
@@ -143,7 +143,7 @@ links:
       name: Z-Axis\Bearing Backplate
       to: "/pub/std/metric/m:m5-threaded-hole-10"
       toInstance:  air-splitter-bracket-hole-L
-  - part: Z-Axis\HGH20CAZ0C v1
+  - part: Common\HGH20CAZ0C v1
     name: linBearing-1
     connect: 
       with: slider-interface
@@ -163,7 +163,7 @@ links:
       name: linBearing-1
       to: "/pub/std/metric/m:m5-screw-6"
       toInstance: TR
-  - part: Z-Axis\HGH20CAZ0C v1
+  - part: Common\HGH20CAZ0C v1
     name: linBearing-2
     connect:
       with: "/pub/std/metric/m:m5-screw-6"
@@ -192,7 +192,7 @@ links:
       name: Z-Axis\Motor Plate
       to: m5-CB8-thru
       toInstance: m5-3-1  
-  - part: Z-Axis\HGH20CAZ0C v1
+  - part: Common\HGH20CAZ0C v1
     name: linBearing-3
     connect:
       with: "/pub/std/metric/m:m5-screw-6"
@@ -202,7 +202,7 @@ links:
       name: spindleBearingStandoff-2
       to: "/pub/std/metric/m:m5-thru"
       toInstance: m5-ToBearing-bottom-1-3    
-  - part: Z-Axis\HGH20CAZ0C v1
+  - part: Common\HGH20CAZ0C v1
     name: linBearing-4
     connect:
       with: "/pub/std/metric/m:m5-screw-6"
