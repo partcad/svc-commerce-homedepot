@@ -1,0 +1,69 @@
+name: /pub/svc/commerce/homedepot
+desc: The Home Depot online store.
+
+docs:
+  intro: |
+    This package can be used for cost estimation for assemblies that use Homedepot parts.
+    Placing orders is not implemented yet.
+
+  usage: |
+    Get an estimate for 4 mm-0.7 Zinc-Plated Metric Hex Nut:
+
+    ```shell
+    $ pc supply quote --provider homedepot hardware/fasteners/nuts/hex_nuts/4_mm_0_7_zinc_plated_metric_hex_nut_2_piece
+    ...
+    INFO:  The following quotes are received:
+    INFO:           /pub/svc/commerce/homedepot:homedepot: HB100174664951: $1.44
+    INFO:                   hardware/fasteners/nuts/hex_nuts/4_mm_0_7_zinc_plated_metric_hex_nut_2_piece#1
+    ...
+    ```
+
+import:
+  pub:
+    onlyInRoot: true
+    type: git
+    url: https://github.com/openvmp/partcad-index.git
+
+providers:
+  homedepot:
+    type: store
+    parameters:
+      discountCode:
+        type: string
+
+render:
+  readme:
+
+parts:
+  hardware/fasteners/nuts/hex_nuts/4_mm_0_7_zinc_plated_metric_hex_nut_2_piece:
+    desc: 4 mm-0.7 Zinc-Plated Metric Hex Nut
+    vendor: homedepot
+    sku: "204275876"
+    count_per_sku: 2
+    url: https://www.homedepot.com/p/Everbilt-4-mm-0-7-Zinc-Plated-Metric-Hex-Nut-2-Piece-803738/204275876
+    type: step # This model is sourced from https://grabcad.com/library/hexagonal-nut-m4-m5-m6-1
+
+  hardware/fasteners/bolts/hex_bolts/m4_0_7_x_20_mm_zinc_plated_hex_bolts_2_pieces:
+    desc: M4-0.7 x 20 mm Class 8.8 Zinc Plated Hex Bolt
+    vendor: homedepot
+    sku: "204273651"
+    count_per_sku: 2
+    url: https://www.homedepot.com/p/M4-0-7-x-20-mm-Class-8-8-Zinc-Plated-Hex-Bolt-2-Pack-801268/204273651
+    type: step # This model is sourced from https://grabcad.com/library/hexagonal-bolt-m4-m5-m6-1
+
+  dimensional-lumber:
+    desc: Vertical 2x4
+    vendor: homedepot
+    sku: "202083072"
+    count_per_sku: 1
+    url: https://www.homedepot.com/p/2-in-x-4-in-x-20-ft-2-Premium-Grade-Hem-Fir-Dimensional-Lumber-82271/202083072
+    type: enrich
+    source: /pub/std/imperial/dimensional-lumber:lumber
+    with:
+      height: 2
+      width: 4
+    offset: [[0, 0, 0], [1, 0, 0], 90]
+    
+assemblies:
+  hardware/fasteners/fastener_assembly:
+    type: assy

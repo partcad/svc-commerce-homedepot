@@ -1,0 +1,8 @@
+links:
+  - part: hardware/fasteners/nuts/hex_nuts/4_mm_0_7_zinc_plated_metric_hex_nut_2_piece
+    name: M4-0.7 x 20 mm Zinc-Plated Hex Bolts (2-Pieces)
+    location: [[-41, 39.5, 21.5], [0, 0, 1], 0]
+
+  - part: hardware/fasteners/bolts/hex_bolts/m4_0_7_x_20_mm_zinc_plated_hex_bolts_2_pieces
+    name: 4 mm-0.7 Zinc-Plated Metric Hex Nut
+    location: [[-60, 43.5, 21.7], [0, 0, 1], 0]
