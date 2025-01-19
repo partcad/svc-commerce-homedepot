@@ -62,6 +62,10 @@ interfaces:
   m5.5-thru:
     inherits:
       m5.5: hole
+    parameters:
+      turnZ:
+        min: 0
+        max: 360
   m5-threaded-hole-15:
     inherits: "/pub/std/metric/m:m5"
     parameters:
@@ -148,6 +152,10 @@ interfaces:
   m10-bar-15:
     inherits:
       "/pub/std/metric/m:m10": 15mm long m10 bar
+    parameters:
+      moveZ:
+        min: -300
+        max: +300
   m10-thru-13:
     inherits:
       "/pub/std/metric/m:m10-thru": 13mm long m10 hole
@@ -609,16 +617,26 @@ parts:
         BL: [[881.50, 610, 81.50], [1.0, 0.0, 0.0], 270.0]
         TR: [[928.50, 610, 128.50], [1.0, 0.0, 0.0], 270.0]
         BR: [[928.50, 610, 81.50], [1.0, 0.0, 0.0], 270.0]
+        mirror-TL: [[881.50, 600, 128.50], [1.0, 0.0, 0.0], 90.0]
+        mirror-BL: [[881.50, 600,  81.50], [1.0, 0.0, 0.0], 90.0]
+        mirror-TR: [[928.50, 600, 128.50], [1.0, 0.0, 0.0], 90.0]
+        mirror-BR: [[928.50, 600,  81.50], [1.0, 0.0, 0.0], 90.0]
 
         # side panel 2 holes
         side-T: [[935, 600, 105], [1.0, 0.0, 0.0], 270.0]
         side-B: [[935, 600, 47], [1.0, 0.0, 0.0], 270.0]
+        mirror-side-T: [[935, 610, 105], [1.0, 0.0, 0.0], 90.0]
+        mirror-side-B: [[935, 610,  47], [1.0, 0.0, 0.0], 90.0]
 
         # frame 4 holes
         frame-TL: [[920, 600, 12.5], [1.0, 0.0, 0.0], 270.0]
         frame-BL: [[920, 600, -12.5], [1.0, 0.0, 0.0], 270.0]
         frame-TR: [[900, 600, 12.5], [1.0, 0.0, 0.0], 270.0]
         frame-BR: [[900, 600, -12.5], [1.0, 0.0, 0.0], 270.0]
+        mirror-frame-TL: [[920, 610,  12.5], [1.0, 0.0, 0.0], 90.0]
+        mirror-frame-BL: [[920, 610, -12.5], [1.0, 0.0, 0.0], 90.0]
+        mirror-frame-TR: [[900, 610,  12.5], [1.0, 0.0, 0.0], 90.0]
+        mirror-frame-BR: [[900, 610, -12.5], [1.0, 0.0, 0.0], 90.0]
   Y-Axis\rear_left_plate:
     type: step
     implements:
@@ -674,7 +692,7 @@ parts:
     implements:
       touch-interface:
         rail-touch: [[-12.50, 601.25, -22.66], [1.0, 0.0, 0.0], 0.0]
-        linear-bearing: [[-12.50, 601.25, -5.16], [1.0, 0.0, 0.0], 0.0]
+        linear-bearing-touch: [[-12.50, 601.25, -5.16], [1.0, 0.0, 0.0], 0.0]
   Y-Axis\y_frame_width_1:
     type: step
     implements:
@@ -688,7 +706,11 @@ parts:
         BL: [[-445.00,  12.50, 16.00], [0.0, 1.0, 0.0], 180.0]
         TR: [[ 445.00, -12.50, 16.00], [0.0, 1.0, 0.0], 180.0]
         BR: [[ 445.00,  12.50, 16.00], [0.0, 1.0, 0.0], 180.0]
-
+  Y-Axis\Ball Screw Y-Axis v1:
+    type: step
+    implements:
+      m10-bar-15:
+        motor-side: [[620.00, 0, 0], [0.0, 1.0, 0.0], 270.0]
 
 
        

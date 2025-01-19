@@ -128,46 +128,46 @@ links:
   - part: Common\HGH20CAZ0C v1
     name: linBearing-1
     connect: 
-      with: slider-interface
+      with: touch-interface
       withInstance: slider
       withParams:
         turnZ: 270
         moveY: 45
       name: x-railing-1
-      to: slider-interface
+      to: touch-interface
       toInstance: slider
   - part: Common\HGH20CAZ0C v1
     name: linBearing-2
     connect: 
-      with: slider-interface
+      with: touch-interface
       withInstance: slider
       withParams:
         turnZ: 270
         moveY: -45
       name: x-railing-1
-      to: slider-interface
+      to: touch-interface
       toInstance: slider
   - part: Common\HGH20CAZ0C v1
     name: linBearing-3
     connect: 
-      with: slider-interface
+      with: touch-interface
       withInstance: slider
       withParams:
         turnZ: 270
         moveY: 45
       name: x-railing-2
-      to: slider-interface
+      to: touch-interface
       toInstance: slider
   - part: Common\HGH20CAZ0C v1
     name: linBearing-4
     connect: 
-      with: slider-interface
+      with: touch-interface
       withInstance: slider
       withParams:
         turnZ: 270
         moveY: -45
       name: x-railing-2
-      to: slider-interface
+      to: touch-interface
       toInstance: slider
   - part: X-Axis\gantry_plate_right
     name: gantry-right

@@ -102,74 +102,6 @@ links:
       toInstance: rail-touch
 
 
-# RIGHT
-#-----------------------
-  # - part: Common\StepperNema23 v1
-  #   name: motor-right
-  # - part: Common\Coupler v1
-  #   name: coupler-right
-  #   connect:
-  #     with: m7.5-thru
-  #     withParams:
-  #       moveZ: 15
-  #     withInstance: T
-  #     name: motor-right
-  #     to: m8-bar-20
-  # - part:  Y-Axis\Y-Motor Spacer v1
-  #   name: motor_spacer_1-right
-  #   connect:
-  #     with: m5.5-thru
-  #     withInstance: m5.5_1
-  #     name: motor-right
-  #     to: m5.5-thru
-  #     toInstance: TL
-  # - part:  Y-Axis\Y-Motor Spacer v1
-  #   name: motor_spacer_2-right
-  #   connect:
-  #     with: m5.5-thru
-  #     withInstance: m5.5_1
-  #     name: motor-right
-  #     to: m5.5-thru
-  #     toInstance: TR
-  # - part:  Y-Axis\Y-Motor Spacer v1
-  #   name: motor_spacer_3-right
-  #   connect:
-  #     with: m5.5-thru
-  #     withInstance: m5.5_1
-  #     name: motor-right
-  #     to: m5.5-thru
-  #     toInstance: BL
-  # - part:  Y-Axis\Y-Motor Spacer v1
-  #   name: motor_spacer_4-right
-  #   connect:
-  #     with: m5.5-thru
-  #     withInstance: m5.5_1
-  #     name: motor-right
-  #     to: m5.5-thru
-  #     toInstance: BR
-  # - part:  Y-Axis\Y Motor Bracket
-  #   name: motor_bracket-right
-  #   connect:
-  #     with: "/pub/std/metric/m:m5-thru"
-  #     withParams:
-  #       turnZ: 180
-  #     withInstance: TL
-  #     name: motor_spacer_1-right
-  #     to: m5.5-thru
-  #     toInstance: m5.5_2
-  # - part:  Y-Axis\rear_left_plate
-  #   name: motor_bracket-right
-  #   connect:
-  #     with: "/pub/std/metric/m:m5-thru"
-  #     withInstance: T
-  #     name: motor_bracket-right
-  #     to: "/pub/std/metric/m:m5-thru"
-  #     toInstance: side-T
-  
-  
-  
-
-  
   - part: Y-Axis\y_frame_width_1
     name: mid-1
     connect:
@@ -270,3 +202,138 @@ links:
       name: frame-left
       to:  "/pub/std/metric/m:m8-thru-22"
       toInstance: rail-01
+  - part:  Y-Axis\Y Motor Bracket
+    name: motor_bracket-right
+    connect:
+      with: "/pub/std/metric/m:m5-thru"
+      withParams:
+        turnZ: 270
+      withInstance: mirror-frame-TL
+      name: frame-right
+      to: m5-threaded-hole-15
+      toInstance: frame-TR 
+  - part:  Y-Axis\rear_left_plate
+    name: rear-right
+    connect:
+      with: "/pub/std/metric/m:m5-thru"
+      withParams:
+        turnZ: 180
+      withInstance: T
+      name: motor_bracket-right
+      to: "/pub/std/metric/m:m5-thru"
+      toInstance: mirror-side-T
+  - part:  Y-Axis\Y-Motor Spacer v1
+    name: motor_spacer_1-right
+    connect:
+      with: m5.5-thru
+      withInstance: m5.5_2
+      name: motor_bracket-right
+      to: "/pub/std/metric/m:m5-thru"
+      toInstance: mirror-TL
+  - part:  Y-Axis\Y-Motor Spacer v1
+    name: motor_spacer_2-right
+    connect:
+      with: m5.5-thru
+      withInstance: m5.5_2
+      name: motor_bracket-right
+      to: "/pub/std/metric/m:m5-thru"
+      toInstance: mirror-TR
+  - part:  Y-Axis\Y-Motor Spacer v1
+    name: motor_spacer_3-right
+    connect:
+      with: m5.5-thru
+      withInstance: m5.5_2
+      name: motor_bracket-right
+      to: "/pub/std/metric/m:m5-thru"
+      toInstance: mirror-BL
+  - part:  Y-Axis\Y-Motor Spacer v1
+    name: motor_spacer_4-right
+    connect:
+      with: m5.5-thru
+      withInstance: m5.5_2
+      name: motor_bracket-right
+      to: "/pub/std/metric/m:m5-thru"
+      toInstance: mirror-BR
+  - part: Common\StepperNema23 v1
+    name: motor-right
+    connect:
+      with: m5.5-thru
+      withInstance: TL
+      withParams:
+        turnZ: 180
+      name: motor_spacer_3-right
+      to: m5.5-thru
+      toInstance: m5.5_1
+  - part: Common\Coupler v1
+    name: coupler-right
+    connect:
+      with: m7.5-thru
+      withParams:
+        moveZ: 15
+      withInstance: T
+      name: motor-right
+      to: m8-bar-20
+  - part: Common\HGH20CAZ0C v1
+    name: linBearing-1
+    connect: 
+      with: touch-interface
+      withInstance: slider
+      withParams:
+        turnZ: 270
+        moveY: 45
+      name: rail-left
+      to: touch-interface
+      toInstance: linear-bearing-touch
+  - part: Common\HGH20CAZ0C v1
+    name: linBearing-2
+    connect: 
+      with: touch-interface
+      withInstance: slider
+      withParams:
+        turnZ: 270
+        moveY: -45
+      name: rail-left
+      to: touch-interface
+      toInstance: linear-bearing-touch
+  - part: Common\HGH20CAZ0C v1
+    name: linBearing-3
+    connect: 
+      with: touch-interface
+      withInstance: slider
+      withParams:
+        turnZ: 270
+        moveY: 45
+      name: rail-right
+      to: touch-interface
+      toInstance: linear-bearing-touch
+  - part: Common\HGH20CAZ0C v1
+    name: linBearing-4
+    connect: 
+      with: touch-interface
+      withInstance: slider
+      withParams:
+        turnZ: 270
+        moveY: -45
+      name: rail-right
+      to: touch-interface
+      toInstance: linear-bearing-touch
+  - part: Y-Axis\Ball Screw Y-Axis v1
+    connect:
+      with: m10-bar-15
+      withParams:
+        moveZ: -20
+      withInstance: motor-side
+      name: coupler-right
+      to: m10-thru-13
+      toInstance: B
+  - part: Y-Axis\Ball Screw Y-Axis v1
+    connect:
+      with: m10-bar-15
+      withParams:
+        moveZ: -20
+      withInstance: motor-side
+      name: coupler-left
+      to: m10-thru-13
+      toInstance: B
+
+
