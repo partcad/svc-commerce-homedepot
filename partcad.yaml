@@ -35,7 +35,7 @@ render:
   readme:
 
 parts:
-  hardware/fasteners/bolts/hex_bolts/m4_0_7_x_20_mm_zinc_plated_hex_bolts_2_pieces:
+  hardware/fasteners/nuts/hex_nuts/4_mm_0_7_zinc_plated_metric_hex_nut_2_piece:
     desc: 4 mm-0.7 Zinc-Plated Metric Hex Nut
     vendor: homedepot
     sku: "204275876"
@@ -43,12 +43,12 @@ parts:
     url: https://www.homedepot.com/p/Everbilt-4-mm-0-7-Zinc-Plated-Metric-Hex-Nut-2-Piece-803738/204275876
     type: step # This model is sourced from https://grabcad.com/library/hexagonal-nut-m4-m5-m6-1
 
-  hardware/fasteners/nuts/hex_nuts/4_mm_0_7_zinc_plated_metric_hex_nut_2_piece:
-    desc: M4-0.7 x 20 mm Zinc-Plated Hex Bolts (2-Pieces)
+  hardware/fasteners/bolts/hex_bolts/m4_0_7_x_20_mm_zinc_plated_hex_bolts_2_pieces:
+    desc: M4-0.7 x 20 mm Class 8.8 Zinc Plated Hex Bolt
     vendor: homedepot
-    sku: "323369835"
+    sku: "204273651"
     count_per_sku: 2
-    url: https://www.homedepot.com/p/Crown-Bolt-M4-0-7-x-20-mm-Zinc-Plated-Hex-Bolts-2-Pieces-35578/202209645
+    url: https://www.homedepot.com/p/M4-0-7-x-20-mm-Class-8-8-Zinc-Plated-Hex-Bolt-2-Pack-801268/204273651
     type: step # This model is sourced from https://grabcad.com/library/hexagonal-bolt-m4-m5-m6-1
 
   dimensional-lumber:
