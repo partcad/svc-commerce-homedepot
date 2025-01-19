@@ -1,61 +1,63 @@
 links:
   - part: Common\StepperNema23 v1
+    name: motor-left
   - part: Common\Coupler v1
+    name: coupler-left
     connect:
       with: m7.5-thru
       withParams:
         moveZ: 15
       withInstance: T
-      name: Common\StepperNema23 v1
+      name: motor-left
       to: m8-bar-20
   - part:  Y-Axis\Y-Motor Spacer v1
-    name: motor_spacer_1
+    name: motor_spacer_1-left
     connect:
       with: m5.5-thru
       withInstance: m5.5_1
-      name: Common\StepperNema23 v1
+      name: motor-left
       to: m5.5-thru
       toInstance: TL
   - part:  Y-Axis\Y-Motor Spacer v1
-    name: motor_spacer_2
+    name: motor_spacer_2-left
     connect:
       with: m5.5-thru
       withInstance: m5.5_1
-      name: Common\StepperNema23 v1
+      name: motor-left
       to: m5.5-thru
       toInstance: TR
   - part:  Y-Axis\Y-Motor Spacer v1
-    name: motor_spacer_3
+    name: motor_spacer_3-left
     connect:
       with: m5.5-thru
       withInstance: m5.5_1
-      name: Common\StepperNema23 v1
+      name: motor-left
       to: m5.5-thru
       toInstance: BL
   - part:  Y-Axis\Y-Motor Spacer v1
-    name: motor_spacer_4
+    name: motor_spacer_4-left
     connect:
       with: m5.5-thru
       withInstance: m5.5_1
-      name: Common\StepperNema23 v1
+      name: motor-left
       to: m5.5-thru
       toInstance: BR
   - part:  Y-Axis\Y Motor Bracket
-    name: motor_bracket_left
+    name: motor_bracket-left
     connect:
       with: "/pub/std/metric/m:m5-thru"
       withParams:
         turnZ: 180
       withInstance: TL
-      name: motor_spacer_1
+      name: motor_spacer_1-left
       to: m5.5-thru
       toInstance: m5.5_2
   - part:  Y-Axis\rear_left_plate
-    name: motor_bracket_left
+    name: motor_bracket-left
     connect:
       with: "/pub/std/metric/m:m5-thru"
       withInstance: T
-      name: motor_bracket_left
+      name: motor_bracket-left
       to: "/pub/std/metric/m:m5-thru"
       toInstance: side-T
   - part: Y-Axis\y_frame_length_right
@@ -65,7 +67,7 @@ links:
       withParams:
         turnZ: 90
       withInstance: frame-TL
-      name: motor_bracket_left
+      name: motor_bracket-left
       to: "/pub/std/metric/m:m5-thru"
       toInstance: frame-TL
   - part: Y-Axis\front_left_plate
@@ -98,3 +100,173 @@ links:
       name: frame-left
       to: touch-interface
       toInstance: rail-touch
+
+
+# RIGHT
+#-----------------------
+  # - part: Common\StepperNema23 v1
+  #   name: motor-right
+  # - part: Common\Coupler v1
+  #   name: coupler-right
+  #   connect:
+  #     with: m7.5-thru
+  #     withParams:
+  #       moveZ: 15
+  #     withInstance: T
+  #     name: motor-right
+  #     to: m8-bar-20
+  # - part:  Y-Axis\Y-Motor Spacer v1
+  #   name: motor_spacer_1-right
+  #   connect:
+  #     with: m5.5-thru
+  #     withInstance: m5.5_1
+  #     name: motor-right
+  #     to: m5.5-thru
+  #     toInstance: TL
+  # - part:  Y-Axis\Y-Motor Spacer v1
+  #   name: motor_spacer_2-right
+  #   connect:
+  #     with: m5.5-thru
+  #     withInstance: m5.5_1
+  #     name: motor-right
+  #     to: m5.5-thru
+  #     toInstance: TR
+  # - part:  Y-Axis\Y-Motor Spacer v1
+  #   name: motor_spacer_3-right
+  #   connect:
+  #     with: m5.5-thru
+  #     withInstance: m5.5_1
+  #     name: motor-right
+  #     to: m5.5-thru
+  #     toInstance: BL
+  # - part:  Y-Axis\Y-Motor Spacer v1
+  #   name: motor_spacer_4-right
+  #   connect:
+  #     with: m5.5-thru
+  #     withInstance: m5.5_1
+  #     name: motor-right
+  #     to: m5.5-thru
+  #     toInstance: BR
+  # - part:  Y-Axis\Y Motor Bracket
+  #   name: motor_bracket-right
+  #   connect:
+  #     with: "/pub/std/metric/m:m5-thru"
+  #     withParams:
+  #       turnZ: 180
+  #     withInstance: TL
+  #     name: motor_spacer_1-right
+  #     to: m5.5-thru
+  #     toInstance: m5.5_2
+  # - part:  Y-Axis\rear_left_plate
+  #   name: motor_bracket-right
+  #   connect:
+  #     with: "/pub/std/metric/m:m5-thru"
+  #     withInstance: T
+  #     name: motor_bracket-right
+  #     to: "/pub/std/metric/m:m5-thru"
+  #     toInstance: side-T
+  
+  
+  
+
+  
+  - part: Y-Axis\y_frame_width_1
+    name: mid-1
+    connect:
+      with: "/pub/std/metric/m:m8-thru-10"
+      withInstance: Left-L
+      withParams:
+        turnZ: 0
+      name: front-left
+      to: "/pub/std/metric/m:m8-thru"
+      toInstance: BL
+  - part: Y-Axis\front_left_plate
+    name: front-right
+    connect:
+      with: "/pub/std/metric/m:m8-thru"
+      withParams:
+        turnZ: 180
+      withInstance: mirror-BL
+      name: mid-1
+      to: "/pub/std/metric/m:m8-thru-10"
+      toInstance: Right-R
+  - part: Common\BF12 End Stop v1
+    name: BF12-right
+    connect:
+      with: m6.5-thru
+      withParams:
+        turnZ: 0
+      withInstance: m6.5-BF12-hole-R
+      name: front-right
+      to: m6.5-thru
+      toInstance: top-T
+  - part: Y-Axis\y_frame_length_right
+    name: frame-right
+    connect:
+      with: "/pub/std/metric/m:m8-thru-10"
+      withParams:
+        turnZ: 180
+      withInstance:  mirror-front-L
+      name: front-right
+      to: "/pub/std/metric/m:m8-thru"
+      toInstance: mirror-TR
+  - part: Y-Axis\Y-Axis Linear Rail v1
+    name: rail-right
+    connect:
+      with: touch-interface
+      withInstance: rail-touch
+      withParams:
+        turnZ: 90
+      name: frame-right
+      to: touch-interface
+      toInstance: rail-touch
+  - part: Y-Axis\y_frame_width_1
+    name: mid-2
+    connect:
+      with: m8-CB13-thru
+      withInstance: TL
+      withParams:
+        turnZ: 90
+      name: frame-left
+      to:  "/pub/std/metric/m:m8-thru-22"
+      toInstance: rail-09
+  - part: Y-Axis\y_frame_width_1
+    name: mid-3
+    connect:
+      with: m8-CB13-thru
+      withInstance: TL
+      withParams:
+        turnZ: 90
+      name: frame-left
+      to:  "/pub/std/metric/m:m8-thru-22"
+      toInstance: rail-07
+  - part: Y-Axis\y_frame_width_1
+    name: mid-4
+    connect:
+      with: m8-CB13-thru
+      withInstance: TL
+      withParams:
+        turnZ: 90
+      name: frame-left
+      to:  "/pub/std/metric/m:m8-thru-22"
+      toInstance: rail-05
+  - part: Y-Axis\y_frame_width_1
+    name: mid-5
+    connect:
+      with: m8-CB13-thru
+      withInstance: TL
+      withParams:
+        turnZ: 90
+      name: frame-left
+      to:  "/pub/std/metric/m:m8-thru-22"
+      toInstance: rail-03
+  - part: Y-Axis\y_frame_width_1
+    name: mid-6
+    connect:
+      with: m8-CB13-thru
+      withInstance: TL
+      withParams:
+        turnZ: 90
+      name: frame-left
+      to:  "/pub/std/metric/m:m8-thru-22"
+      toInstance: rail-01
