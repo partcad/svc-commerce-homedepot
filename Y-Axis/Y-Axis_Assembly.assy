@@ -53,7 +53,7 @@ links:
       to: m5.5-thru
       toInstance: m5.5_2
   - part:  Y-Axis\rear_left_plate
-    name: motor_bracket-left
+    name: rear-left
     connect:
       with: "/pub/std/metric/m:m5-thru"
       withInstance: T
@@ -318,6 +318,7 @@ links:
       to: touch-interface
       toInstance: linear-bearing-touch
   - part: Y-Axis\Ball Screw Y-Axis v1
+    name: screw-bar-right
     connect:
       with: m10-bar-15
       withParams:
@@ -327,6 +328,7 @@ links:
       to: m10-thru-13
       toInstance: B
   - part: Y-Axis\Ball Screw Y-Axis v1
+    name: screw-bar-left
     connect:
       with: m10-bar-15
       withParams:
@@ -335,5 +337,59 @@ links:
       name: coupler-left
       to: m10-thru-13
       toInstance: B
+  - part: Common\BK12 End Stop v1
+    name: BK-left
+    connect:
+      with: m6.5-thru
+      withParams:
+        turnZ: 180
+      withInstance:  m6.5-BK12-hole-TL
+      name: rear-left
+      to: m6.5-thru
+      toInstance: BL
+  - part: Common\BK12 End Stop v1
+    name: BK-right
+    connect:
+      with: m6.5-thru
+      withParams:
+        turnZ: 180
+      withInstance:  m6.5-BK12-hole-TL
+      name: rear-right
+      to: m6.5-thru
+      toInstance: mirror-TL
+  - part: Y-Axis\Y-Axis-Sensor-Holder v1
+    name: sensor-holder-left
+    connect:
+      with: m6.5-thru
+      withParams:
+        turnZ: 0
+      withInstance: L
+      name: BK-left
+      to: m6.5-thru
+      toInstance: top-m6.5-BK12-hole-TR
+  - part: Y-Axis\Y-Axis-Sensor-Holder v1
+    name: sensor-holder-right
+    connect:
+      with: m6.5-thru
+      withParams:
+        turnZ: 180
+      withInstance: L
+      name: BK-right
+      to: m6.5-thru
+      toInstance: top-m6.5-BK12-hole-BL
+  - part: Common\Proximity Sensor v1
+    name: sensor-left
+    connect:
+        withInstance: m8-screw-52
+        name: sensor-holder-left
+        to: thruhole-8.5
+        toInstance: F
+  - part: Common\Proximity Sensor v1
+    name: sensor-left
+    connect:
+        withInstance: m8-screw-52
+        name: sensor-holder-right
+        to: thruhole-8.5
+        toInstance: R
 
 
