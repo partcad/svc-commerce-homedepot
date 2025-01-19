@@ -1,5 +1,5 @@
-desc: Credits to thehardwareguy for the CAD design. For more details, visit the CNC page on their website  
-      https://www.thehardwareguy.co.uk/diy-cnc-machine
+desc: Credits to thehardwareguy for the CAD design. For more details, visit the CNC
+  page on their website https://www.thehardwareguy.co.uk/diy-cnc-machine
 
 import:
   # Add dependencies here
@@ -41,7 +41,7 @@ sketches:
     circle: 35
 
 interfaces:
-  slider-interface:
+  touch-interface:
     desc: slider surface for linera bearings
     parameters:
       turnZ:
@@ -64,8 +64,18 @@ interfaces:
       m5.5: hole
   m5-threaded-hole-15:
     inherits: "/pub/std/metric/m:m5"
+    parameters:
+      turnZ:
+        min: 0
+        max: 360
   m5-CB8-thru:
     inherits: "/pub/std/metric/m:m5"
+  m5-CB10-thru:
+    inherits: "/pub/std/metric/m:m5"
+    parameters:
+      turnZ:
+        min: 0
+        max: 360
   m6-CB10-thru:
     inherits: "/pub/std/metric/m:m6"
   m6.5:
@@ -80,6 +90,10 @@ interfaces:
       m6.5:
         sketch: m6.5
   m6.5-thru:
+    parameters:
+      turnZ:
+        min: 0
+        max: 360
     inherits:
       m6.5: hole
 
@@ -202,7 +216,7 @@ parts:
         BL: [[362.792, 350.565, 293.321], [1.0, 0.0, 0.0], 90.0]
         TR: [[394.792, 350.565, 329.321], [1.0, 0.0, 0.0], 90.0]
         BR: [[394.792, 350.565, 293.321], [1.0, 0.0, 0.0], 90.0]
-      slider-interface:
+      touch-interface:
         slider: [[378.65, 363.065, 311.30], [1.0, 0.0, 0.0], 270.0]
 
   Z-Axis\Z-Motor Spacer v1:
@@ -329,7 +343,7 @@ parts:
         m6-cb-4: [[-13.206, 145.00, -5.16], [1, 0, 0], 180]
         m6-cb-5: [[-13.206, 85.00, -5.16], [1, 0, 0], 180]
         m6-cb-6: [[-13.206, 25.00, -5.16], [1, 0, 0], 180]
-      slider-interface:
+      touch-interface:
         slider: [[-13.206, 175, -22.66], [1, 0, 0], 180]
   Z-Axis\y-axis_ball_nut v1:
     type: step
@@ -544,7 +558,7 @@ parts:
         m6-rail-hole-12: [[-13.206, 670.00, -22.66], [1.0, 0.0, 0.0], 0.0]
         m6-rail-hole-13: [[-13.206, 730.00, -22.66], [1.0, 0.0, 0.0], 0.0]
         m6-rail-hole-14: [[-13.206, 790.00, -22.66], [1.0, 0.0, 0.0], 0.0]
-      slider-interface:
+      touch-interface:
         slider: [[-13.206, 400.00, -5.16], [1.0, 0.0, 0.0], 0.0]
   X-Axis\gantry_plate_right:
     type: step
@@ -556,9 +570,9 @@ parts:
         ball-nut-BR: [[20, -12.00, -70.00], [0.0, 1.0, 0.0], 270.0]
 
       "/pub/std/metric/m:m8-thru":
-        m8-bearing-bock-1: [[20,  73.00, -90.00], [0.0, 1.0, 0.0], 270.0]
-        m8-bearing-bock-2: [[20,  43.00, -90.00], [0.0, 1.0, 0.0], 270.0]
-        m8-bearing-bock-3: [[20,   0.00, -90.00], [0.0, 1.0, 0.0], 270.0]
+        m8-bearing-bock-1: [[20, 73.00, -90.00], [0.0, 1.0, 0.0], 270.0]
+        m8-bearing-bock-2: [[20, 43.00, -90.00], [0.0, 1.0, 0.0], 270.0]
+        m8-bearing-bock-3: [[20, 0.00, -90.00], [0.0, 1.0, 0.0], 270.0]
         m8-bearing-bock-4: [[20, -43.00, -90.00], [0.0, 1.0, 0.0], 270.0]
         m8-bearing-bock-5: [[20, -73.00, -90.00], [0.0, 1.0, 0.0], 270.0]
 
@@ -577,10 +591,92 @@ parts:
         m8-bearing-bock-3: [[0, 0.00, 0.00], [0.0, 1.0, 0.0], 90.0]
         m8-bearing-bock-4: [[0, -43.00, 0.00], [0.0, 1.0, 0.0], 90.0]
         m8-bearing-bock-5: [[0, -73.00, 0.00], [0.0, 1.0, 0.0], 90.0]
+  Y-Axis\Y-Motor Spacer v1:
+    type: step
+    implements:
+      m5.5-thru:
+        m5.5_1: [[0, 0, 20], [0.0, 0.0, 1.0], 0.0]
+        m5.5_2: [[0, 0, 0], [1.0, 0.0, 0.0], 180.0]
+  Y-Axis\Y Motor Bracket:
+    type: step
+    implements:
+      "/pub/std/metric/m:m5-thru":
+        # motor spacers
+        TL: [[881.50, 610, 128.50], [1.0, 0.0, 0.0], 270.0]
+        BL: [[881.50, 610, 81.50], [1.0, 0.0, 0.0], 270.0]
+        TR: [[928.50, 610, 128.50], [1.0, 0.0, 0.0], 270.0]
+        BR: [[928.50, 610, 81.50], [1.0, 0.0, 0.0], 270.0]
+
+        # side panel 2 holes
+        side-T: [[935, 600, 105], [1.0, 0.0, 0.0], 270.0]
+        side-B: [[935, 600, 47], [1.0, 0.0, 0.0], 270.0]
+
+        # frame 4 holes
+        frame-TL: [[920, 600, 12.5], [1.0, 0.0, 0.0], 270.0]
+        frame-BL: [[920, 600, -12.5], [1.0, 0.0, 0.0], 270.0]
+        frame-TR: [[900, 600, 12.5], [1.0, 0.0, 0.0], 270.0]
+        frame-BR: [[900, 600, -12.5], [1.0, 0.0, 0.0], 270.0]
+  Y-Axis\rear_left_plate:
+    type: step
+    implements:
+      "/pub/std/metric/m:m5-thru":
+        # motor spacers
+        T: [[0, -605.00, 146], [0.0, 1.0, 0.0], 90.0]
+        B: [[0, -605.00, 88], [0.0, 1.0, 0.0], 90.0]
+  Y-Axis\y_frame_length_right:
+    type: step
+    implements:
+      m5-threaded-hole-15:
+        frame-TL: [[30, 600, 12.5], [1.0, 0.0, 0.0], 90.0]
+        frame-BL: [[30, 600, -12.5], [1.0, 0.0, 0.0], 90.0]
+        frame-TR: [[10, 600, 12.5], [1.0, 0.0, 0.0], 90.0]
+        frame-BR: [[10, 600, -12.5], [1.0, 0.0, 0.0], 90.0]
+      "/pub/std/metric/m:m8-thru-10":
+        front-L: [[40, -587.50, 0], [0.0, 1.0, 0.0], 270.0]
+        front-R: [[40, -562.50, 0], [0.0, 1.0, 0.0], 270.0]
+      "/pub/std/metric/m:m8-thru-22":
+        rail-01: [[20.00, 587.50, -25.00], [1.0, 0.0, 0.0], 0.0]
+        rail-02: [[20.00, 562.50, -25.00], [1.0, 0.0, 0.0], 0.0]
+        rail-03: [[20.00, 357.50, -25.00], [1.0, 0.0, 0.0], 0.0]
+        rail-04: [[20.00, 332.50, -25.00], [1.0, 0.0, 0.0], 0.0]
+        rail-05: [[20.00, 127.50, -25.00], [1.0, 0.0, 0.0], 0.0]
+        rail-06: [[20.00, 102.50, -25.00], [1.0, 0.0, 0.0], 0.0]
+        rail-07: [[20.00, -102.50, -25.00], [1.0, 0.0, 0.0], 0.0]
+        rail-08: [[20.00, -127.50, -25.00], [1.0, 0.0, 0.0], 0.0]
+        rail-09: [[20.00, -332.50, -25.00], [1.0, 0.0, 0.0], 0.0]
+        rail-10: [[20.00, -357.50, -25.00], [1.0, 0.0, 0.0], 0.0]
+        rail-11: [[20.00, -562.50, -25.00], [1.0, 0.0, 0.0], 0.0]
+        rail-12: [[20.00, -587.50, -25.00], [1.0, 0.0, 0.0], 0.0]
+      touch-interface:
+        rail-touch: [[20.00, 0, 25.00], [1.0, 0.0, 0.0], 180.0]
+  Y-Axis\front_left_plate:
+    type: step
+    implements:
+      m6.5-thru:
+        top-T: [[33.75, -600, 169.00], [1.0, 0.0, 0.0], 90.0]
+        top-R: [[33.75, -600, 123.00], [1.0, 0.0, 0.0], 90.0]
+      "/pub/std/metric/m:m8-thru":
+        TL: [[12.50, -600.00, 41.00], [1.0, 0.0, 0.0], 90.0]
+        TR: [[37.50, -600.00, 41.00], [1.0, 0.0, 0.0], 90.0]
+        BL: [[12.50, -600.00, 8.00], [1.0, 0.0, 0.0], 90.0]
+        BR: [[37.50, -600.00, 8.00], [1.0, 0.0, 0.0], 90.0]
+  Y-Axis\Y-Axis Linear Rail v1:
+    type: step
+    implements:
+      touch-interface:
+        rail-touch: [[-12.50, 601.25, -22.66], [1.0, 0.0, 0.0], 0.0]
+        linear-bearing: [[-12.50, 601.25, -5.16], [1.0, 0.0, 0.0], 0.0]
+
+
+       
+
+
 
 
 assemblies:
   Z-Axis\Z-Axis_Assembly:
     type: assy
   X-Axis\X-Axis_Assembly:
+    type: assy
+  Y-Axis\Y-Axis_Assembly:
     type: assy

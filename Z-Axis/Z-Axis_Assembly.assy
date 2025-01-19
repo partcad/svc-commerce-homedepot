@@ -146,12 +146,12 @@ links:
   - part: Common\HGH20CAZ0C v1
     name: linBearing-1
     connect: 
-      with: slider-interface
+      with: touch-interface
       withInstance: slider
       withParams:
         turnZ: 270
       name: lin-Rail-2
-      to: slider-interface
+      to: touch-interface
       toInstance: slider
   - part: Z-Axis\Z_Bearing Stand Off
     name: spindleBearingStandoff-1
