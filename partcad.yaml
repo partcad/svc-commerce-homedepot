@@ -21,6 +21,16 @@ sketches:
     rectangle:
       side-x: 14.6
       side-y: 77.50
+  rectangle-508x762:
+    type: basic
+    rectangle:
+      side-x: 50.8
+      side-y: 76.2
+  rectangle-107.763x50.8:
+    type: basic
+    rectangle:
+      side-x: 50.8
+      side-y: 107.763
   m5.5:
     type: basic
     circle: 2.75
@@ -56,6 +66,30 @@ interfaces:
     ports:
       slider-surface:
         sketch: rectangle-slide-area
+  wood-touch-interface:
+    desc: surface to connect wood bars
+    parameters:
+      turnZ:
+        min: 0
+        max: 360
+      moveY:
+        min: -500
+        max: 500
+    ports:
+      slider-surface:
+        sketch: rectangle-508x762
+  wood-touch-angle-interface:
+    desc: surface for connect angled wood bars
+    parameters:
+      turnZ:
+        min: 0
+        max: 360
+      moveY:
+        min: -500
+        max: 500
+    ports:
+      slider-surface:
+        sketch: rectangle-107.763x50.8
   m5.5:
     desc: Abstract 5.5mm circular interface
     abstract: true
@@ -116,7 +150,6 @@ interfaces:
         max: 360
     inherits:
       m6.5: hole
-
   m7.5:
     desc: Abstract 7.5mm circular interface
     abstract: true
@@ -130,7 +163,6 @@ interfaces:
       moveZ:
         min: -300
         max: 300
-
   m8:
     desc: Abstract 8mm circular interface
     abstract: true
@@ -165,7 +197,6 @@ interfaces:
         max: 360
     inherits:
       h8.25: hole
-
   m10-bar-11:
     inherits:
       "/pub/std/metric/m:m10": 11mm long m10 bar
@@ -179,7 +210,6 @@ interfaces:
   m10-thru-13:
     inherits:
       "/pub/std/metric/m:m10-thru": 13mm long m10 hole
-
   StepperMotorMount:
     inherits:
       m5.5-thru:
@@ -231,9 +261,9 @@ parts:
         m6.5-BK12-hole-BL: [[-23.00, -21.50, 19], [1.0, 0.0, 0.0], 270.0]
         m6.5-BK12-hole-BR: [[23.00, -21.50, 19], [1.0, 0.0, 0.0], 270.0]
         top-m6.5-BK12-hole-TL: [[-23.00, 11.00, 6], [1.0, 0.0, 0.0], 270.0]
-        top-m6.5-BK12-hole-TR: [[ 23.00, 11.00, 6], [1.0, 0.0, 0.0], 270.0]
+        top-m6.5-BK12-hole-TR: [[23.00, 11.00, 6], [1.0, 0.0, 0.0], 270.0]
         top-m6.5-BK12-hole-BL: [[-23.00, 11.00, 19], [1.0, 0.0, 0.0], 270.0]
-        top-m6.5-BK12-hole-BR: [[ 23.00, 11.00, 19], [1.0, 0.0, 0.0], 270.0]
+        top-m6.5-BK12-hole-BR: [[23.00, 11.00, 19], [1.0, 0.0, 0.0], 270.0]
   Common\BF12 End Stop v1:
     type: step
     implements:
@@ -747,11 +777,55 @@ parts:
     type: step
     implements:
       m6.5-thru:
-        L: [[ 6.5, 2.5, 0], [1.0, 0.0, 0.0], 270.0]
+        L: [[6.5, 2.5, 0], [1.0, 0.0, 0.0], 270.0]
         $: [[-6.5, 2.5, 0], [1.0, 0.0, 0.0], 270.0]
       thruhole-8.5:
         F: [[-12, -22.5, 19], [0.0, 1.0, 0.0], 270.0]
-        R: [[ 12, -22.5, 19], [0.0, 1.0, 0.0], 90.0]
+        R: [[12, -22.5, 19], [0.0, 1.0, 0.0], 90.0]
+  
+  Base\table-long:
+    type: cadquery
+    implements:
+      wood-touch-interface:
+        F: [[0, 549.2, 0], [1.0, 0.0, 0.0], 90.0]
+        R: [[0, -549.2, 0], [1.0, 0.0, 0.0], 270.0]
+      wood-touch-angle-interface:
+        TLCorner: [[0, 495.3185, 38.1], [1.0, 0.0, 0.0], 0.0]
+        TRCorner: [[0, -495.3185, 38.1], [1.0, 0.0, 0.0], 0.0]
+        BLCorner: [[0, 495.3185, -38.1], [1.0, 0.0, 0.0], 180.0]
+        BRCorner: [[0, -495.3185, -38.1], [1.0, 0.0, 0.0], 180.0]
+
+        TLMid: [[0,  210.318,  38.1], [1.0, 0.0, 0.0],  0.0]
+        TRMid: [[0, -210.318,  38.1], [1.0, 0.0, 0.0],  0.0]
+        BLMid: [[0,  210.318, -38.1], [1.0, 0.0, 0.0], 180.0]
+        BRMid: [[0, -210.318, -38.1], [1.0, 0.0, 0.0], 180.0]
+  Base\table-short:
+    type: cadquery
+    implements:
+      wood-touch-interface:
+        F: [[0, 465, 0], [1.0, 0.0, 0.0], 90.0]
+        FT: [[25.4, 439.6, 0], [-0.577, -0.577, 0.577], 120.0]
+        FB: [[-25.4, 439.6, 0], [-0.577, -0.577, 0.577], 120.0]
+        R: [[0, -465, 0], [1.0, 0.0, 0.0], 90.0]
+        RT: [[25.4, -439.6, 0], [-0.577, -0.577, 0.577], 120.0]
+        RB: [[-25.4, -439.6, 0], [-0.577, -0.577, 0.577], 120.0]
+      wood-touch-angle-interface:
+        TLCorner: [[0,  411.3185, 38.1], [1.0, 0.0, 0.0], 0.0]
+        TRCorner: [[0, -411.3185, 38.1], [1.0, 0.0, 0.0], 0.0]
+        BLCorner: [[0,  411.3185, -38.1], [1.0, 0.0, 0.0], 180.0]
+        BRCorner: [[0, -411.3185, -38.1], [1.0, 0.0, 0.0], 180.0]
+        
+        TLMid: [[0,  126.124,  38.1], [1.0, 0.0, 0.0],  0.0]
+        TRMid: [[0, -126.124,  38.1], [1.0, 0.0, 0.0],  0.0]
+        BLMid: [[0,  126.124, -38.1], [1.0, 0.0, 0.0], 180.0]
+        BRMid: [[0, -126.124, -38.1], [1.0, 0.0, 0.0], 180.0]
+  Base\table-angled:
+    type: cadquery
+    implements:
+      wood-touch-angle-interface:
+        T: [[338.882, 285, 25.4], [0.577, 0.577,  0.577], -120]
+        B: [[53.8815, 0, 25.4], [0.577, 0.577, -0.577], 120.0]
+        
 
 
        
@@ -765,4 +839,6 @@ assemblies:
   X-Axis\X-Axis_Assembly:
     type: assy
   Y-Axis\Y-Axis_Assembly:
+    type: assy
+  Base\Base_Axxembly:
     type: assy

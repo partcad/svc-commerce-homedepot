@@ -1,0 +1,278 @@
+links:
+  - part: Base\table-long
+    name: bottom-long-front
+  - part: Base\table-short
+    name: bottom-short-1
+    connect:
+      with: wood-touch-interface
+      withParams:
+        turnZ: 90
+      withInstance: FT
+      name: bottom-long-front
+      to: wood-touch-interface
+      toInstance: F
+  - part: Base\table-short
+    name: bottom-short-2
+    connect:
+      with: wood-touch-interface
+      withParams:
+        turnZ: 270
+      withInstance: RT
+      name: bottom-long-front
+      to: wood-touch-interface
+      toInstance: R
+  - part: Base\table-long
+    name: bottom-long-rear
+    connect:
+      with: wood-touch-interface
+      withParams:
+        turnZ: 270
+      withInstance: F
+      name: bottom-short-2
+      to: wood-touch-interface
+      toInstance: FT
+  - part: Base\table-angled
+    name: bottom-angle-1
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 90
+      withInstance: B
+      name: bottom-long-front
+      to: wood-touch-angle-interface
+      toInstance: TLCorner
+  - part: Base\table-angled
+    name: bottom-angle-2
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 270
+      withInstance: B
+      name: bottom-long-front
+      to: wood-touch-angle-interface
+      toInstance: TRCorner
+  - part: Base\table-angled
+    name: bottom-angle-3
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 90
+      withInstance: B
+      name: bottom-long-rear
+      to: wood-touch-angle-interface
+      toInstance: BRCorner
+  - part: Base\table-angled
+    name: bottom-angle-4
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 270
+      withInstance: B
+      name: bottom-long-rear
+      to: wood-touch-angle-interface
+      toInstance: BLCorner
+  - part: Base\table-angled
+    name: bottom-angle-5
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 270
+      withInstance: B
+      name: bottom-short-1
+      to: wood-touch-angle-interface
+      toInstance: TRCorner
+  - part: Base\table-angled
+    name: bottom-angle-6
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 90
+      withInstance: B
+      name: bottom-short-1
+      to: wood-touch-angle-interface
+      toInstance: TLCorner
+  - part: Base\table-angled
+    name: bottom-angle-7
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 270
+      withInstance: B
+      name: bottom-short-2
+      to: wood-touch-angle-interface
+      toInstance: TRCorner
+  - part: Base\table-angled
+    name: bottom-angle-8
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 90
+      withInstance: B
+      name: bottom-short-2
+      to: wood-touch-angle-interface
+      toInstance: TLCorner
+  
+  
+  - part: Base\table-short
+    name: mid-short-1
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 90
+      withInstance: TLMid
+      name: bottom-angle-8
+      to: wood-touch-angle-interface
+      toInstance: T
+  - part: Base\table-short
+    name: mid-short-2
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 90
+      withInstance: TLMid
+      name: bottom-angle-6
+      to: wood-touch-angle-interface
+      toInstance: T
+  - part: Base\table-long
+    name: mid-long-1
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 90
+      withInstance: TLMid
+      name: bottom-angle-4
+      to: wood-touch-angle-interface
+      toInstance: T
+  - part: Base\table-long
+    name: mid-long-2
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 90
+      withInstance: TLMid
+      name: bottom-angle-2
+      to: wood-touch-angle-interface
+      toInstance: T
+ 
+  - part: Base\table-angled
+    name: bottom-angle-21
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 90
+      withInstance: B
+      name: mid-long-1
+      to: wood-touch-angle-interface
+      toInstance: BLMid
+  - part: Base\table-angled
+    name: bottom-angle-22
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 270
+      withInstance: B
+      name: mid-long-1
+      to: wood-touch-angle-interface
+      toInstance: BRMid
+  - part: Base\table-angled
+    name: bottom-angle-23
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 90
+      withInstance: B
+      name: mid-long-2
+      to: wood-touch-angle-interface
+      toInstance: BLMid
+  - part: Base\table-angled
+    name: bottom-angle-24
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 270
+      withInstance: B
+      name: mid-long-2
+      to: wood-touch-angle-interface
+      toInstance: BRMid
+  - part: Base\table-angled
+    name: bottom-angle-25
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 90
+      withInstance: B
+      name: mid-short-1
+      to: wood-touch-angle-interface
+      toInstance: BLMid
+  - part: Base\table-angled
+    name: bottom-angle-26
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 270
+      withInstance: B
+      name: mid-short-1
+      to: wood-touch-angle-interface
+      toInstance: BRMid
+  - part: Base\table-angled
+    name: bottom-angle-27
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 90
+      withInstance: B
+      name: mid-short-2
+      to: wood-touch-angle-interface
+      toInstance: BLMid
+  - part: Base\table-angled
+    name: bottom-angle-28
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 270
+      withInstance: B
+      name: mid-short-2
+      to: wood-touch-angle-interface
+      toInstance: BRMid
+  - part: Base\table-short
+    name: top-short-1
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 90
+      withInstance: BLCorner
+      name: bottom-angle-28
+      to: wood-touch-angle-interface
+      toInstance: T
+  - part: Base\table-short
+    name: top-short-2
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 90
+      withInstance: BLCorner
+      name: bottom-angle-26
+      to: wood-touch-angle-interface
+      toInstance: T
+  - part: Base\table-long
+    name: top-long-1
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 90
+      withInstance: BLCorner
+      name: bottom-angle-24
+      to: wood-touch-angle-interface
+      toInstance: T
+  - part: Base\table-long
+    name: top-long-2
+    connect:
+      with: wood-touch-angle-interface
+      withParams:
+        turnZ: 90
+      withInstance: BLCorner
+      name: bottom-angle-22
+      to: wood-touch-angle-interface
+      toInstance: T
+ 
+ 
