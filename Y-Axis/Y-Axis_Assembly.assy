@@ -391,5 +391,24 @@ links:
         name: sensor-holder-right
         to: thruhole-8.5
         toInstance: R
+  - part: Y-Axis\workbench
+    connect:
+        with: touch-interface
+        withInstance: B
+        withParams:
+          turnY: 0
+          moveX: 115
+        name: mid-4
+        to: touch-interface
+  - part: Y-Axis\Spoil Board
+    connect:
+        with: touch-interface
+        withParams:
+          turnY: 0
+        name: Y-Axis\workbench
+        to: touch-interface
+        toInstance: T
+
+
 
 
