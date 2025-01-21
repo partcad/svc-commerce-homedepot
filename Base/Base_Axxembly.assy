@@ -249,8 +249,8 @@ links:
     connect:
       with: wood-touch-angle-interface
       withParams:
-        turnZ: 90
-      withInstance: BLCorner
+        turnZ: 270
+      withInstance: TLCorner
       name: bottom-angle-26
       to: wood-touch-angle-interface
       toInstance: T
@@ -274,5 +274,93 @@ links:
       name: bottom-angle-22
       to: wood-touch-angle-interface
       toInstance: T
- 
- 
+  - part: Base\table-mid-short
+    name: bottom-mid-L
+    connect:
+      with: wood-touch-interface
+      withParams:
+        turnZ: 90
+      withInstance: B
+      name: bottom-long-front
+      to: wood-touch-interface
+      toInstance: Mid-LB
+  - part: Base\table-mid-short
+    name: bottom-mid-M
+    connect:
+      with: wood-touch-interface
+      withParams:
+        turnZ: 90
+      withInstance: B
+      name: bottom-long-front
+      to: wood-touch-interface
+      toInstance: Mid-MB
+  - part: Base\table-mid-short
+    name: bottom-mid-R
+    connect:
+      with: wood-touch-interface
+      withParams:
+        turnZ: 90
+      withInstance: B
+      name: bottom-long-front
+      to: wood-touch-interface
+      toInstance: Mid-RB
+  - part: Base\table-mid-short
+    name: mid-mid-L
+    connect:
+      with: wood-touch-interface
+      withParams:
+        turnZ: 90
+      withInstance: B
+      name: mid-long-2
+      to: wood-touch-interface
+      toInstance: Mid-LB
+  - part: Base\table-mid-short
+    name: mid-mid-M
+    connect:
+      with: wood-touch-interface
+      withParams:
+        turnZ: 90
+      withInstance: B
+      name: mid-long-2
+      to: wood-touch-interface
+      toInstance: Mid-MB
+  - part: Base\table-mid-short
+    name: mid-mid-R
+    connect:
+      with: wood-touch-interface
+      withParams:
+        turnZ: 90
+      withInstance: B
+      name: mid-long-2
+      to: wood-touch-interface
+      toInstance: Mid-RB
+  - part: Base\table-long
+    name: top-mid-1
+    connect:
+      with: wood-touch-interface
+      withParams:
+        turnZ: 90
+      withInstance: R
+      name: top-short-2
+      to: wood-touch-interface
+      toInstance: Mid-LF
+  - part: Base\table-long
+    name: top-mid-1
+    connect:
+      with: wood-touch-interface
+      withParams:
+        turnZ: 90
+      withInstance: R
+      name: top-short-2
+      to: wood-touch-interface
+      toInstance: Mid-MF
+  - part: Base\table-long
+    name: top-mid-1
+    connect:
+      with: wood-touch-interface
+      withParams:
+        turnZ: 90
+      withInstance: R
+      name: top-short-2
+      to: wood-touch-interface
+      toInstance: Mid-RF
