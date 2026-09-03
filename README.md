@@ -1,4 +1,4 @@
-# /pub/svc/commerce/homedepot
+# //pub/svc/commerce/homedepot
 
 The Home Depot online store.
 
@@ -13,7 +13,7 @@ Get an estimate for cylinder:
 $ pc supply quote --provider homedepot hardware/fasteners/nuts/hex_nuts/4_mm_0_7_zinc_plated_metric_hex_nut_2_piece
 ...
 INFO:  The following quotes are received:
-INFO:           /pub/svc/commerce/homedepot:homedepot: HB100174664951: $1.44
+INFO:           //pub/svc/commerce/homedepot:homedepot: HB100174664951: $1.44
 INFO:                   hardware/fasteners/nuts/hex_nuts/4_mm_0_7_zinc_plated_metric_hex_nut_2_piece#1
 ...
 ```
