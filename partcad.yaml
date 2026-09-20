@@ -1,3 +1,4 @@
+partcad: ">=0.8.0"
 name: //pub/svc/commerce/homedepot
 desc: The Home Depot online store.
 
@@ -18,7 +19,7 @@ docs:
     ...
     ```
 
-import:
+dependencies:
   pub:
     onlyInRoot: true
     type: git
