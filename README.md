@@ -8,10 +8,12 @@ Placing orders is not implemented yet.
 ## Dimensional lumber
 
 Lumber and plywood are declared as instances of the standard sizes in
-[`//pub/std/imperial/dimensional-lumber`](https://github.com/partcad/partcad-standard-imperial-dimensional-lumber):
-each product is an `enrich` of `lumber` or `plywood` with the product's nominal
-size, plus the vendor and SKU it is sold under. The geometry is the standard's,
-in its frame (width along X, length along Y, thickness along Z).
+[`//pub/std/imperial/dimensional-lumber`](https://github.com/partcad/partcad-standard-imperial-dimensional-lumber).
+Two generic templates, `dimensional-lumber` and `plywood`, are the store's
+products of any size: parametric, with the vendor and **no SKU**, since there is
+nothing to order until a size is chosen. Each stocked product is an `enrich` of
+a template at its nominal size, with the SKU it is sold under. The geometry is
+the standard's, in its frame (width along X, length along Y, thickness along Z).
 
 | Part                        | Product                                                   | SKU         |
 |-----------------------------|-----------------------------------------------------------|-------------|

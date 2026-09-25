@@ -8,10 +8,11 @@ docs:
     Placing orders is not implemented yet.
 
     Its dimensional lumber and plywood are declared as instances of the
-    standard sizes in `//pub/std/imperial/dimensional-lumber`: each product is
-    an `enrich` of `lumber` or `plywood` with the product's nominal size, plus
-    the vendor and SKU it is sold under. A part cut to size from one names it
-    as its stock:
+    standard sizes in `//pub/std/imperial/dimensional-lumber`. The generic
+    templates `dimensional-lumber` and `plywood` are the store's products of
+    any size, with no SKU; each stocked product is an `enrich` of one of them
+    at its nominal size, with the SKU it is sold under. A part cut to size from
+    one names it as its stock:
 
     ```yaml
     manufacturing:
@@ -47,6 +48,11 @@ dependencies:
     type: git
     url: https://github.com/partcad/partcad-index.git
 
+# The store supplies its own products: a part of this package is looked for at
+# the providers this package lists.
+suppliers:
+  homedepot:
+
 providers:
   homedepot:
     type: store
@@ -76,19 +82,35 @@ parts:
 
   # Dimensional lumber and plywood.
   #
-  # Each product is an instance of the standard part it is a size of -- an
-  # 'enrich' of '//pub/std/imperial/dimensional-lumber' with the product's
-  # nominal size -- and adds nothing to it but what makes it a product: who
-  # sells it, under which SKU. So the geometry is the standard's, in the
-  # standard's frame (width along X, length along Y, thickness along Z), and a
-  # part cut to size from one of these names it as its stock in those same
-  # coordinates. See '//pub/furniture/workspace/basic:imperial-desk-1'.
+  # Two generic templates, 'dimensional-lumber' and 'plywood': what this store
+  # sells, of any size, as the standard part it is a size of
+  # ('//pub/std/imperial/dimensional-lumber'). They are the store's products in
+  # general and not one of them in particular, so they carry the vendor and no
+  # SKU -- there is nothing to order until a size is chosen.
+  #
+  # Each product is then an instance of a template at the product's nominal
+  # size, with the SKU it is sold under. So the geometry is the standard's, in
+  # the standard's frame (width along X, length along Y, thickness along Z),
+  # and a part cut to size from one of these names it as its stock in those
+  # same coordinates. See '//pub/furniture/workspace/basic:imperial-desk-1'.
+
+  dimensional-lumber:
+    desc: Dimensional lumber, by its nominal size (any size; see the products below for what is stocked)
+    type: alias
+    source: //pub/std/imperial/dimensional-lumber:lumber
+    vendor: homedepot
+
+  plywood:
+    desc: Plywood panels, by their nominal thickness (any size; see the products below for what is stocked)
+    type: alias
+    source: //pub/std/imperial/dimensional-lumber:plywood
+    vendor: homedepot
 
   lumber/2x4x8:
-    desc: 2 in. x 4 in. x 8 ft. #2 Premium Grade Fir Dimensional Lumber
+    desc: "2 in. x 4 in. x 8 ft. #2 Premium Grade Fir Dimensional Lumber"
     # https://www.homedepot.com/p/2-in-x-4-in-x-8-ft-2-Premium-2-Grade-Fir-Dimensional-Lumber-441317/202094172
     type: enrich
-    source: //pub/std/imperial/dimensional-lumber:lumber
+    source: dimensional-lumber
     with:
       width: 4
       height: 2
@@ -98,10 +120,10 @@ parts:
     count_per_sku: 1
 
   lumber/2x4x20:
-    desc: 2 in. x 4 in. x 20 ft. #2 Premium Grade Hem-Fir Dimensional Lumber
+    desc: "2 in. x 4 in. x 20 ft. #2 Premium Grade Hem-Fir Dimensional Lumber"
     # https://www.homedepot.com/p/2-in-x-4-in-x-20-ft-2-Premium-Grade-Hem-Fir-Dimensional-Lumber-82271/202083072
     type: enrich
-    source: //pub/std/imperial/dimensional-lumber:lumber
+    source: dimensional-lumber
     with:
       width: 4
       height: 2
@@ -111,10 +133,10 @@ parts:
     count_per_sku: 1
 
   lumber/2x6x8:
-    desc: 2 in. x 6 in. x 8 ft. #2 Premium Grade Fir Dimensional Lumber
+    desc: "2 in. x 6 in. x 8 ft. #2 Premium Grade Fir Dimensional Lumber"
     # https://www.homedepot.com/p/2-in-x-6-in-x-8-ft-2-Premium-Grade-Fir-Dimensional-Lumber-603643/100026460
     type: enrich
-    source: //pub/std/imperial/dimensional-lumber:lumber
+    source: dimensional-lumber
     with:
       width: 6
       height: 2
@@ -124,10 +146,10 @@ parts:
     count_per_sku: 1
 
   lumber/4x4x8:
-    desc: 4 in. x 4 in. x 8 ft. #2 Premium Grade Fir Dimensional Lumber
+    desc: "4 in. x 4 in. x 8 ft. #2 Premium Grade Fir Dimensional Lumber"
     # https://www.homedepot.com/p/4-in-x-4-in-x-8-ft-2-Premium-Grade-Fir-Dimensional-Lumber-441856/202094374
     type: enrich
-    source: //pub/std/imperial/dimensional-lumber:lumber
+    source: dimensional-lumber
     with:
       width: 4
       height: 4
@@ -140,7 +162,7 @@ parts:
     desc: 23/32 in. x 4 ft. x 8 ft. BC Sanded Pine Plywood
     # https://www.homedepot.com/p/Plytanium-23-32-in-x-4-ft-x-8-ft-BC-Sanded-Pine-Plywood-201428/100061386
     type: enrich
-    source: //pub/std/imperial/dimensional-lumber:plywood
+    source: plywood
     with:
       width: 48
       length: 96
