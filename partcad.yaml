@@ -7,6 +7,22 @@ docs:
     This package can be used for cost estimation for assemblies that use Homedepot parts.
     Placing orders is not implemented yet.
 
+    Its dimensional lumber and plywood are declared as instances of the
+    standard sizes in `//pub/std/imperial/dimensional-lumber`: each product is
+    an `enrich` of `lumber` or `plywood` with the product's nominal size, plus
+    the vendor and SKU it is sold under. A part cut to size from one names it
+    as its stock:
+
+    ```yaml
+    manufacturing:
+      method: subtractive
+      source: //pub/svc/commerce/homedepot:lumber/4x4x8
+      cut:
+        cuts:
+          - along: +Y
+            length: $length in
+    ```
+
   usage: |
     Get an estimate for 4 mm-0.7 Zinc-Plated Metric Hex Nut:
 
@@ -17,6 +33,12 @@ docs:
     INFO:           //pub/svc/commerce/homedepot:homedepot: HB100174664951: $1.44
     INFO:                   hardware/fasteners/nuts/hex_nuts/4_mm_0_7_zinc_plated_metric_hex_nut_2_piece#1
     ...
+    ```
+
+    Get an estimate for an 8 ft. 4x4:
+
+    ```shell
+    $ pc supply quote --provider homedepot lumber/4x4x8
     ```
 
 dependencies:
@@ -52,19 +74,81 @@ parts:
     url: https://www.homedepot.com/p/M4-0-7-x-20-mm-Class-8-8-Zinc-Plated-Hex-Bolt-2-Pack-801268/204273651
     type: step # This model is sourced from https://grabcad.com/library/hexagonal-bolt-m4-m5-m6-1
 
-  dimensional-lumber:
-    desc: Vertical 2x4
-    vendor: homedepot
-    sku: "202083072"
-    count_per_sku: 1
-    url: https://www.homedepot.com/p/2-in-x-4-in-x-20-ft-2-Premium-Grade-Hem-Fir-Dimensional-Lumber-82271/202083072
+  # Dimensional lumber and plywood.
+  #
+  # Each product is an instance of the standard part it is a size of -- an
+  # 'enrich' of '//pub/std/imperial/dimensional-lumber' with the product's
+  # nominal size -- and adds nothing to it but what makes it a product: who
+  # sells it, under which SKU. So the geometry is the standard's, in the
+  # standard's frame (width along X, length along Y, thickness along Z), and a
+  # part cut to size from one of these names it as its stock in those same
+  # coordinates. See '//pub/furniture/workspace/basic:imperial-desk-1'.
+
+  lumber/2x4x8:
+    desc: 2 in. x 4 in. x 8 ft. #2 Premium Grade Fir Dimensional Lumber
+    # https://www.homedepot.com/p/2-in-x-4-in-x-8-ft-2-Premium-2-Grade-Fir-Dimensional-Lumber-441317/202094172
     type: enrich
     source: //pub/std/imperial/dimensional-lumber:lumber
     with:
-      height: 2
       width: 4
-    offset: [[0, 0, 0], [1, 0, 0], 90]
-    
+      height: 2
+      length: 96
+    vendor: homedepot
+    sku: "202094172"
+    count_per_sku: 1
+
+  lumber/2x4x20:
+    desc: 2 in. x 4 in. x 20 ft. #2 Premium Grade Hem-Fir Dimensional Lumber
+    # https://www.homedepot.com/p/2-in-x-4-in-x-20-ft-2-Premium-Grade-Hem-Fir-Dimensional-Lumber-82271/202083072
+    type: enrich
+    source: //pub/std/imperial/dimensional-lumber:lumber
+    with:
+      width: 4
+      height: 2
+      length: 240
+    vendor: homedepot
+    sku: "202083072"
+    count_per_sku: 1
+
+  lumber/2x6x8:
+    desc: 2 in. x 6 in. x 8 ft. #2 Premium Grade Fir Dimensional Lumber
+    # https://www.homedepot.com/p/2-in-x-6-in-x-8-ft-2-Premium-Grade-Fir-Dimensional-Lumber-603643/100026460
+    type: enrich
+    source: //pub/std/imperial/dimensional-lumber:lumber
+    with:
+      width: 6
+      height: 2
+      length: 96
+    vendor: homedepot
+    sku: "100026460"
+    count_per_sku: 1
+
+  lumber/4x4x8:
+    desc: 4 in. x 4 in. x 8 ft. #2 Premium Grade Fir Dimensional Lumber
+    # https://www.homedepot.com/p/4-in-x-4-in-x-8-ft-2-Premium-Grade-Fir-Dimensional-Lumber-441856/202094374
+    type: enrich
+    source: //pub/std/imperial/dimensional-lumber:lumber
+    with:
+      width: 4
+      height: 4
+      length: 96
+    vendor: homedepot
+    sku: "202094374"
+    count_per_sku: 1
+
+  plywood/23-32x4x8:
+    desc: 23/32 in. x 4 ft. x 8 ft. BC Sanded Pine Plywood
+    # https://www.homedepot.com/p/Plytanium-23-32-in-x-4-ft-x-8-ft-BC-Sanded-Pine-Plywood-201428/100061386
+    type: enrich
+    source: //pub/std/imperial/dimensional-lumber:plywood
+    with:
+      width: 48
+      length: 96
+      thickness: 0.75
+    vendor: homedepot
+    sku: "100061386"
+    count_per_sku: 1
+
 assemblies:
   hardware/fasteners/fastener_assembly:
     type: assy
