@@ -5,9 +5,40 @@ The Home Depot online store.
 This package can be used for cost estimates for assemblies that use Homedepot parts.
 Placing orders is not implemented yet.
 
+## Dimensional lumber
+
+Lumber and plywood are declared as instances of the standard sizes in
+[`//pub/std/imperial/dimensional-lumber`](https://github.com/partcad/partcad-standard-imperial-dimensional-lumber).
+Two generic templates, `dimensional-lumber` and `plywood`, are the store's
+products of any size: parametric, with the vendor and **no SKU**, since there is
+nothing to order until a size is chosen. Each stocked product is an `enrich` of
+a template at its nominal size, with the SKU it is sold under. The geometry is
+the standard's, in its frame (width along X, length along Y, thickness along Z).
+
+| Part                        | Product                                                   | SKU         |
+|-----------------------------|-----------------------------------------------------------|-------------|
+| `lumber/2x4x8`              | 2 in. x 4 in. x 8 ft. #2 Premium Grade Fir                | 202094172   |
+| `lumber/2x4x20`             | 2 in. x 4 in. x 20 ft. #2 Premium Grade Hem-Fir           | 202083072   |
+| `lumber/2x6x8`              | 2 in. x 6 in. x 8 ft. #2 Premium Grade Fir                | 100026460   |
+| `lumber/4x4x8`              | 4 in. x 4 in. x 8 ft. #2 Premium Grade Fir                | 202094374   |
+| `plywood/23-32x4x8`         | 23/32 in. x 4 ft. x 8 ft. BC Sanded Pine Plywood          | 100061386   |
+
+A part cut to size from one of them names it as its stock, in the same
+coordinates:
+
+```yaml
+manufacturing:
+  method: subtractive
+  source: //pub/svc/commerce/homedepot:lumber/4x4x8
+  cut:
+    cuts:
+      - along: +Y
+        length: $length in
+```
+
 
 ## Usage
-Get an estimate for cylinder:
+Get an estimate for a hex nut:
 
 ```shell
 $ pc supply quote --provider homedepot hardware/fasteners/nuts/hex_nuts/4_mm_0_7_zinc_plated_metric_hex_nut_2_piece
