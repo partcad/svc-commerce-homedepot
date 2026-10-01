@@ -58,7 +58,9 @@ interfaces so that an assembly can put them together with `connect:`:
 
 `metric-nut` and `metric-washer` are two more templates of the same kind as
 `dimensional-lumber`: cq_warehouse's nuts and washers, which
-`//pub/std/metric/cqwarehouse` does not publish yet.
+`//pub/std/metric/cqwarehouse` does not publish yet
+([partcad/partcad-cqwarehouse#4](https://github.com/partcad/partcad-cqwarehouse/pull/4)).
+Every bolt, screw and nut is drawn with its thread.
 `hardware/fasteners/catalog_assembly` is `hardware/fasteners/fastener_assembly`
 built from the catalog, through those interfaces, with nothing placed by hand:
 
@@ -84,11 +86,13 @@ INFO:                   hardware/fasteners/nuts/hex_nuts/4_mm_0_7_zinc_plated_me
 ...
 ```
 
-The same for a product from the catalog, which has to name the provider for
-now (see [Quotes](catalog-plugin/README.md#quotes)):
+The same for a product from the catalog, whose every category names this
+store as its supplier (see [Quotes](catalog-plugin/README.md#quotes) for the
+PartCAD version that takes that from a plugin; `--provider homedepot` works
+with any):
 
 ```shell
-$ pc supply quote --provider homedepot //pub/svc/commerce/homedepot/catalog/nuts:204275876
+$ pc supply quote //pub/svc/commerce/homedepot/catalog/nuts:204275876
 ```
 
 

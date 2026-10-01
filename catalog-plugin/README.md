@@ -47,9 +47,8 @@ pc list parts //pub/svc/commerce/homedepot/catalog/bolts
 # A product, its geometry, and the interface it implements
 pc info //pub/svc/commerce/homedepot/catalog/bolts:204273651
 
-# What it costs (see "Quotes" below for why --provider)
-pc supply quote --provider //pub/svc/commerce/homedepot:homedepot \
-    //pub/svc/commerce/homedepot/catalog/bolts:204273651
+# What it costs, from the store every category names as its supplier
+pc supply quote //pub/svc/commerce/homedepot/catalog/bolts:204273651
 ```
 
 In an assembly, a fastener is put on another by its interface. This is
@@ -95,7 +94,7 @@ product and what became of it.
   is modelled as (the 2 x 2 ft. project panels are 23.75 in.). A thickness given
   only in millimetres, as a "category", or as one of two, is left out.
 * **Bolts and screws.** The head type picks the cq_warehouse part, the thread
-  and the length its `size` and `length`. The thread has to be ISO 261's coarse
+  and the length its `size` and `length`, and it is drawn with its thread. The thread has to be ISO 261's coarse
   one, which is the thread `//pub/std/metric/m` states and the one
   cq_warehouse's sizes are named by; an ISO designation without a pitch (`M6`)
   means exactly that, and a fine thread (`M10-1.25`) is a different thread
@@ -104,7 +103,7 @@ product and what became of it.
   already there — a tapped hole, a nut — and an `m-screw` is one that cuts its
   own.
 * **Nuts and washers.** The kind picks the ISO or DIN type, the thread or the
-  screw size picks the size. A washer whose title gives its outside diameter
+  screw size picks the size; a nut is drawn with its thread too. A washer whose title gives its outside diameter
   (`10 mm x 20 mm`) has to have the standard's.
 * **The pack.** `(2-Pack)`, `5-Pieces`, `(3 per Bag)`, `5PC` and the like are
   the part's `count_per_sku`, which is what a quote divides the count by.
@@ -164,22 +163,36 @@ The same goes for nuts and washers in general. `//pub/std/metric/cqwarehouse`
 publishes cq_warehouse's screws and none of its nuts or washers, so this
 package declares two templates of its own, `metric-nut` and `metric-washer`,
 that ask the same library for them (`metric_nut.py`, `metric_washer.py`). They
-belong in that package, and become aliases of it once they are there. One size
-is held back meanwhile: cq_warehouse 0.8.0 gives the DIN 1587 M10 cap nut a
-height of 88 mm, where the standard says 8.
+belong in that package, which
+[partcad/partcad-cqwarehouse#4](https://github.com/partcad/partcad-cqwarehouse/pull/4)
+adds them to, and they become aliases of it once it is merged. One size is held
+back meanwhile: cq_warehouse 0.8.0 gives the DIN 1587 M10 cap nut a height of
+88 mm, where the standard says 8, which
+[#5](https://github.com/partcad/partcad-cqwarehouse/pull/5) corrects there.
 
 ## Quotes
 
-`pc supply quote --provider …:homedepot` works for every part here, exactly as
-it does for the package's own: the provider is asked whether it stocks the
-vendor's SKU and then for a price, and the SKU is the item ID it puts in the
-cart. Without `--provider`, PartCAD 0.8.133 looks for the suppliers the part's
-own package lists and fails with `AttributeError: 'ProjectExternalRepository'
-object has no attribute 'suppliers'` — a package served by a plugin is never
-given the attribute, and could not take a `suppliers:` from its metadata if it
-were, since those are read when the package is created and the metadata
-arrives later. That is a PartCAD issue, shared by every plugin-backed package,
-and this one says nothing about suppliers until it is fixed there.
+Every category names this package's store as its supplier, in its metadata —
+a package served by a plugin has no `partcad.yaml` for a `suppliers:` section
+to be in — so a part of the catalog is quoted the way the package's own are:
+
+```shell
+pc supply quote //pub/svc/commerce/homedepot/catalog/nuts:204275876
+```
+
+The provider is asked whether it stocks the vendor's SKU and then for a price,
+and the SKU is the item ID it puts in the cart, as it is.
+
+That needs a PartCAD that reads `suppliers` from a plugin's metadata, which
+[partcad/partcad#714](https://github.com/partcad/partcad/pull/714) adds. One
+without it (0.8.135 and earlier) fails a quote that names no provider with
+`AttributeError: 'ProjectExternalRepository' object has no attribute
+'suppliers'`; naming the provider works with any version:
+
+```shell
+pc supply quote --provider //pub/svc/commerce/homedepot:homedepot \
+    //pub/svc/commerce/homedepot/catalog/nuts:204275876
+```
 
 ## Maintaining it
 
@@ -234,9 +247,11 @@ catalog agrees with all four (a test says so).
 | `metric_nut.py`, `metric_washer.py` | The geometry of the `metric-nut` and `metric-washer` templates, by cq_warehouse.  |
 | `test_catalog_repo.py`   | Unit tests: no network, no CAD kernel.                                                       |
 
-The directory is not called `catalog`, and must not be. When PartCAD resolves
-`//pub/svc/commerce/homedepot/catalog/...` it looks for a sub-folder of that
-name before it looks at the package's dependencies, and on finding one without
-a `partcad.yaml` it stops there — so every reference to the catalog from an
+The directory is not called `catalog`, and must not be while PartCAD 0.8.135
+and earlier are in use. When those resolve
+`//pub/svc/commerce/homedepot/catalog/...` they look for a sub-folder of that
+name before they look at the package's dependencies, and on finding one without
+a `partcad.yaml` they stop there — so every reference to the catalog from an
 assembly fails as "Package not found", while the same reference typed at the
 command line, after something else has loaded the catalog, works.
+[partcad/partcad#715](https://github.com/partcad/partcad/pull/715) fixes that.

@@ -41,7 +41,10 @@ import sys
 # being served what it cached until this is raised. Raise it with any change to
 # what a product is served as - a rule, a table, a template - and with any
 # change to 'products.jsonl'.
-CACHE_VERSION = 1
+#
+# v1 was the first catalog; v2 draws the fasteners with their threads and names
+# the store as every category's supplier.
+CACHE_VERSION = 2
 
 _VENDOR = "homedepot"
 _STORE = "//pub/svc/commerce/homedepot"
@@ -53,6 +56,13 @@ _NUT = _STORE + ":metric-nut"  # cq_warehouse's nuts, which //pub/std/metric/cqw
 _WASHER = _STORE + ":metric-washer"  # ... and its washers
 _CQWAREHOUSE = "//pub/std/metric/cqwarehouse:fastener/"
 _M = "//pub/std/metric/m:"
+
+# Who sells what the catalog holds: this package's own store provider. Stated
+# in every category's metadata, because a package served by a plugin has no
+# partcad.yaml for a 'suppliers:' section to be in, and a part is looked for at
+# the suppliers of the package it is in - so without it a quote that names no
+# provider finds nobody to ask.
+SUPPLIERS = {_STORE + ":homedepot": {}}
 
 _PRODUCTS_FILE = "products.jsonl"
 
@@ -495,10 +505,10 @@ def _screw(kind, title):
     return category, {
         "type": "enrich",
         "source": _CQWAREHOUSE + part,
-        # 'simple' leaves the thread out of the geometry - it is a cylinder at
-        # the thread's major diameter - which is what a catalog of hundreds of
-        # them can afford to render. The thread is stated by the interface.
-        "with": {"size": size, "length": length, "simple": True},
+        # With its thread: 'simple' would draw a plain cylinder at the
+        # thread's major diameter instead, which is cheaper to render and is
+        # not what is on the shelf.
+        "with": {"size": size, "length": length, "simple": False},
         # A machine screw is a bolt in //pub/std/metric/m's sense: it goes into
         # a thread that is already there, a tapped hole or a nut, rather than
         # cutting its own, which is what its 'm-screw' is for.
@@ -698,7 +708,11 @@ def get(key):
     if sub == "deps":
         return []
     if sub == "meta":
-        return {"desc": CATEGORIES[first], "objectKinds": list(_CATEGORY_OBJECT_KINDS)}
+        return {
+            "desc": CATEGORIES[first],
+            "objectKinds": list(_CATEGORY_OBJECT_KINDS),
+            "suppliers": dict(SUPPLIERS),
+        }
     if sub == "objects/part":
         return catalog(first)
     if sub.startswith("objects/part/"):

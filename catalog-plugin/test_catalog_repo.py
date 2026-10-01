@@ -72,6 +72,14 @@ def test_a_category_holds_parts_only():
         assert plugin.get(category + "/objects/part"), category
 
 
+def test_every_category_names_the_store_as_its_supplier():
+    # A plugin-served package has no partcad.yaml for 'suppliers:' to be in, so
+    # it is in the metadata: without it, a quote that names no provider finds
+    # nobody to ask about any part of the catalog.
+    for category in plugin.CATEGORIES:
+        assert plugin.get(category + "/meta")["suppliers"] == {"//pub/svc/commerce/homedepot:homedepot": {}}
+
+
 def test_one_part_is_the_part_the_enumeration_lists():
     parts = plugin.get("bolts/objects/part")
     item_id, config = next(iter(parts.items()))
@@ -184,7 +192,7 @@ def test_a_hex_bolt_is_cq_warehouses_and_implements_the_m_bolt():
     category, config = _config("Everbilt M4-0.7 x 20 mm Class 8.8 Zinc Plated Hex Bolt (2-Pack)")
     assert category == "bolts"
     assert config["source"] == "//pub/std/metric/cqwarehouse:fastener/hexhead-iso4017"
-    assert config["with"] == {"size": "M4-0.7", "length": 20, "simple": True}
+    assert config["with"] == {"size": "M4-0.7", "length": 20, "simple": False}
     # On the bearing face, its Z up into the head: cq_warehouse's frame.
     assert config["implements"] == {_M + "m-bolt-length;size=4,length=20": [[0, 0, 0], [1, 0, 0], 0]}
     assert config["count_per_sku"] == 2
@@ -228,7 +236,7 @@ def test_every_spelling_of_a_thread_is_read():
     assert _config("Everbilt 10 mm - 1.5 mm x 25 mm Metric Flat-Head Phillips Machine Screw")[1]["with"] == {
         "size": "M10-1.5",
         "length": 25,
-        "simple": True,
+        "simple": False,
     }
 
 

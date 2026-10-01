@@ -173,7 +173,7 @@ parts:
       simple:
         type: bool
         desc: Leave the thread out, as a plain bore at the thread's major diameter
-        default: true
+        default: false
       hand:
         type: string
         enum: [right, left]
