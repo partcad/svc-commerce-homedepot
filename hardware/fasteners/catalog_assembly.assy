@@ -1,0 +1,36 @@
+# The joint 'fastener_assembly' places by hand - an M4-0.7 x 20 mm hex bolt and
+# an M4-0.7 hex nut - built out of the catalog instead, and put together purely
+# through the //pub/std/metric/m interfaces those products implement, with a
+# flat washer under the head and another under the nut. Nothing is placed by
+# coordinates: every item is connected to the bolt, which is where the
+# catalog's ports put them, and 'moveZ' is how far down the shank each one
+# sits, measured from the underside of the head.
+#
+# The two washers are 0.9 mm thick (ISO 7089, M4), so this clamps 6 mm of
+# whatever the bolt goes through: the second washer starts 0.9 + 6 = 6.9 mm
+# down, and the nut 0.9 further.
+links:
+  - part: //pub/svc/commerce/homedepot/catalog/bolts:204273651
+    name: bolt
+
+  - part: //pub/svc/commerce/homedepot/catalog/washers:204276428
+    name: head-washer
+    connect:
+      name: bolt
+      withInstance: top
+
+  - part: //pub/svc/commerce/homedepot/catalog/washers:204276428
+    name: nut-washer
+    connect:
+      name: bolt
+      withInstance: top
+      toParams:
+        moveZ: 6.9
+
+  - part: //pub/svc/commerce/homedepot/catalog/nuts:204275876
+    name: nut
+    connect:
+      name: bolt
+      withInstance: top
+      toParams:
+        moveZ: 7.8

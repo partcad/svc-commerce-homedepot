@@ -36,6 +36,41 @@ manufacturing:
         length: $length in
 ```
 
+## Catalog
+
+The store's products that a PartCAD standard describes are served as
+[`//pub/svc/commerce/homedepot/catalog`](catalog-plugin/README.md), one
+sub-package per category, each product a part named by its item ID (the
+"Internet #" its URL ends with) and carrying that as its SKU. For now that is
+dimensional lumber and plywood, as instances of the standard sizes above, and
+metric fasteners, which implement the
+[`//pub/std/metric/m`](https://github.com/partcad/partcad-standard-metric-m)
+interfaces so that an assembly can put them together with `connect:`:
+
+| Sub-package       | Products | Geometry                                                    | Implements                     |
+|-------------------|---------:|-------------------------------------------------------------|--------------------------------|
+| `catalog/lumber`  | 185      | `dimensional-lumber`                                        | —                              |
+| `catalog/plywood` | 117      | `plywood`                                                   | —                              |
+| `catalog/bolts`   | 107      | `//pub/std/metric/cqwarehouse` (hex, flange)                | `m-bolt-length`                |
+| `catalog/screws`  | 150      | `//pub/std/metric/cqwarehouse` (socket, button, flat, pan)  | `m-bolt-length`                |
+| `catalog/nuts`    | 45       | `metric-nut` (hex, flange, cap)                             | `m-threaded-thru-depth`, `m-tapped-hole` |
+| `catalog/washers` | 36       | `metric-washer` (flat, fender)                              | `m-thru-depth`                 |
+
+`metric-nut` and `metric-washer` are two more templates of the same kind as
+`dimensional-lumber`: cq_warehouse's nuts and washers, which
+`//pub/std/metric/cqwarehouse` does not publish yet.
+`hardware/fasteners/catalog_assembly` is `hardware/fasteners/fastener_assembly`
+built from the catalog, through those interfaces, with nothing placed by hand:
+
+```shell
+$ pc list parts //pub/svc/commerce/homedepot/catalog/nuts
+$ pc info //pub/svc/commerce/homedepot/catalog/bolts:204273651
+$ pc inspect -a hardware/fasteners/catalog_assembly
+```
+
+See [`catalog-plugin/README.md`](catalog-plugin/README.md) for how each product
+is read, what is left out and why, and how to add to it.
+
 
 ## Usage
 Get an estimate for a hex nut:
@@ -47,6 +82,13 @@ INFO:  The following quotes are received:
 INFO:           //pub/svc/commerce/homedepot:homedepot: HB100174664951: $1.44
 INFO:                   hardware/fasteners/nuts/hex_nuts/4_mm_0_7_zinc_plated_metric_hex_nut_2_piece#1
 ...
+```
+
+The same for a product from the catalog, which has to name the provider for
+now (see [Quotes](catalog-plugin/README.md#quotes)):
+
+```shell
+$ pc supply quote --provider homedepot //pub/svc/commerce/homedepot/catalog/nuts:204275876
 ```
 
 

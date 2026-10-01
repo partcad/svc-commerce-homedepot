@@ -24,6 +24,13 @@ docs:
             length: $length in
     ```
 
+    The store's products that a PartCAD standard describes are served as
+    `//pub/svc/commerce/homedepot/catalog`, one sub-package per category
+    (`lumber`, `plywood`, `bolts`, `screws`, `nuts`, `washers`), each product
+    a part named by its item ID. The lumber and plywood are instances of the
+    standard sizes, and the metric fasteners implement the
+    `//pub/std/metric/m` interfaces. See `catalog-plugin/README.md`.
+
   usage: |
     Get an estimate for 4 mm-0.7 Zinc-Plated Metric Hex Nut:
 
@@ -42,11 +49,39 @@ docs:
     $ pc supply quote --provider homedepot lumber/4x4x8
     ```
 
+    Browse the catalog, and put its fasteners together by their interfaces:
+
+    ```shell
+    $ pc list parts //pub/svc/commerce/homedepot/catalog/bolts
+    $ pc info //pub/svc/commerce/homedepot/catalog/bolts:204273651
+    $ pc inspect -a hardware/fasteners/catalog_assembly
+    ```
+
 dependencies:
   pub:
     onlyInRoot: true
     type: git
     url: https://github.com/partcad/partcad-index.git
+
+  # The store's catalog, served by the 'catalog_repo' plugin as
+  # //pub/svc/commerce/homedepot/catalog: one sub-package per category, each
+  # holding the products a PartCAD standard describes, named by their item ID.
+  # See catalog-plugin/README.md.
+  #
+  # The plugin's files are in 'catalog-plugin/' and not in 'catalog/', and that
+  # is not a matter of taste: PartCAD resolves '.../homedepot/catalog' by
+  # looking for a sub-folder of that name before it looks at these
+  # dependencies, and a folder without a partcad.yaml in it ends the search.
+  catalog:
+    type: external
+    plugin: :catalog_repo
+    desc: The store's dimensional lumber, plywood and metric fasteners, by category.
+
+repositories:
+  catalog_repo:
+    type: basic
+    path: catalog-plugin/catalog_repo.py
+    desc: Serves the store's products that a PartCAD standard describes, from catalog-plugin/products.jsonl.
 
 # The store supplies its own products: a part of this package is looked for at
 # the providers this package lists.
@@ -105,6 +140,62 @@ parts:
     type: alias
     source: //pub/std/imperial/dimensional-lumber:plywood
     vendor: homedepot
+
+  # Metric nuts and washers, as cq_warehouse draws them.
+  #
+  # The same two kinds of template, for the fasteners the catalog sells that
+  # //pub/std/metric/cqwarehouse has no part for: it publishes cq_warehouse's
+  # screws and none of its nuts or washers. These are those, asked of the same
+  # library, and they belong there beside the screws - once they are, these
+  # become aliases of them. Each is placed the way cq_warehouse places it, on
+  # the XY plane with its bearing face at Z=0, which is where the catalog puts
+  # the ports of the //pub/std/metric/m interfaces each product implements.
+
+  metric-nut:
+    desc: Metric nuts, by their thread and their standard (any size; see the catalog for what is stocked)
+    type: cadquery
+    path: catalog-plugin/metric_nut.py
+    vendor: homedepot
+    pythonRequirements:
+      - git+https://github.com/gumyr/cq_warehouse.git@v0.8.0#egg=cq_warehouse
+    parameters:
+      size:
+        type: string
+        desc: The thread, as cq_warehouse names it ("M6-1", "M8-1.25")
+        default: M6-1
+      fastener_type:
+        type: string
+        desc: >
+          ISO 4032 (a regular hex nut), ISO 4033 (high), ISO 4035 (thin, a jam
+          nut), DIN 1665 (with a flange) or DIN 1587 (a domed cap nut)
+        enum: [iso4032, iso4033, iso4035, din1665, din1587]
+        default: iso4032
+      simple:
+        type: bool
+        desc: Leave the thread out, as a plain bore at the thread's major diameter
+        default: true
+      hand:
+        type: string
+        enum: [right, left]
+        default: right
+
+  metric-washer:
+    desc: Metric plain washers, by the screw they take and their standard (any size; see the catalog for what is stocked)
+    type: cadquery
+    path: catalog-plugin/metric_washer.py
+    vendor: homedepot
+    pythonRequirements:
+      - git+https://github.com/gumyr/cq_warehouse.git@v0.8.0#egg=cq_warehouse
+    parameters:
+      size:
+        type: string
+        desc: The screw size it is for ("M6")
+        default: M6
+      fastener_type:
+        type: string
+        desc: ISO 7089 (a plain washer) or ISO 7093 (the large series, a fender washer)
+        enum: [iso7089, iso7093]
+        default: iso7089
 
   lumber/2x4x8:
     desc: "2 in. x 4 in. x 8 ft. #2 Premium Grade Fir Dimensional Lumber"
@@ -173,4 +264,7 @@ parts:
 
 assemblies:
   hardware/fasteners/fastener_assembly:
+    type: assy
+
+  hardware/fasteners/catalog_assembly:
     type: assy
