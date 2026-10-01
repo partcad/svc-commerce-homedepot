@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta, timezone
 import json
 import sys
+from urllib.parse import urlsplit
 
 import requests_cache
 from pyquery import PyQuery
@@ -81,6 +82,55 @@ def update_cookies(response_cookies):
     return ";".join(f"{k}={v}" for k, v in updated_cookies.items())
 
 
+def is_item_id(sku):
+    """
+    Whether the SKU is already a Home Depot item ID (the "Internet #").
+
+    That is the 9-digit number a product URL ends with
+    ('/p/<name>/<item ID>'), and it is what the cart takes. A package that
+    states it as the SKU needs no lookup at all; anything else (a store SKU, a
+    model number) is looked up on the website.
+    """
+    # ASCII only: 'str.isdigit()' is true of superscripts and other scripts' digits.
+    return len(sku) == 9 and all("0" <= char <= "9" for char in sku)
+
+
+def _find_product_urls(node):
+    """
+    Every product page URL ('.../p/...') anywhere in a JSON-LD document.
+
+    Product pages, search results and category pages structure their JSON-LD
+    differently, and Home Depot changes it from time to time, so no single path
+    into it is relied on.
+    """
+    if isinstance(node, dict):
+        for key, value in node.items():
+            if key in ("url", "@id") and isinstance(value, str) and "/p/" in value:
+                yield value
+            else:
+                yield from _find_product_urls(value)
+    elif isinstance(node, list):
+        for value in node:
+            yield from _find_product_urls(value)
+
+
+def _product_id_from_json_ld(response):
+    """The item ID of the first product page a page's JSON-LD names, or None."""
+    for tag in PyQuery(response.text)('script[type="application/ld+json"]').items():
+        # Each block is its own document: a page usually has several, and
+        # joining their text is not JSON.
+        try:
+            data = json.loads(tag.text())
+        except json.JSONDecodeError:
+            continue
+        for p_url in _find_product_urls(data):
+            # The path alone: a query or a fragment is not part of the item ID.
+            product_id = urlsplit(p_url).path.rstrip("/").split("/")[-1]
+            if is_item_id(product_id):
+                return product_id
+    return None
+
+
 def get_product_id(sku):
     """
     Retrieve the product ID corresponding to the provided SKU from Home Depot's website.
@@ -99,6 +149,9 @@ def get_product_id(sku):
     global cookies_string
     global cookies_dict
 
+    if is_item_id(sku):
+        return sku
+
     url = f"https://www.homedepot.com/s/{sku}"
     response = session.get(url, headers=construct_headers())
 
@@ -106,30 +159,26 @@ def get_product_id(sku):
     if response.url != url:
         cookies_string = update_cookies(response.cookies)
         return response.url.split("/")[-1]
-    
+
     # Try the product page URL
     url = f"https://www.homedepot.com/p/{sku}"
     product_response = session.get(url, headers=construct_headers())
-    
+
     if product_response.url != url:
         cookies_string = update_cookies(product_response.cookies)
         return product_response.url.split("/")[-1]
-    
-    # Parse JSON-LD script for product URL
-    try:
-        pq = PyQuery(response.text)
-        script_tag = pq('script[type="application/ld+json"]')
-        if not script_tag:
-            raise ValueError("No JSON-LD script tag found")
-        
-        data = json.loads(script_tag.text())
-        p_url = data[0]["mainEntity"]["offers"]["itemOffered"][0]["offers"]["url"]
-    except (KeyError, IndexError, json.JSONDecodeError) as e:
-        sys.stderr.write(f"Error parsing JSON-LD: {e}\n")
-        raise Exception("Failed to get Product ID from SKU")
-    
+
+    # Look for the product page in the search results
+    product_id = _product_id_from_json_ld(response)
+    if product_id is None:
+        raise Exception(
+            f"Failed to get Product ID from SKU {sku}: "
+            f"https://www.homedepot.com/s/{sku} (HTTP {response.status_code}) "
+            "neither redirects to a product page nor names one"
+        )
+
     cookies_string = update_cookies(response.cookies)
-    return p_url.split("/")[-1]
+    return product_id
 
 
 def get_quote(product_id, item_count):
