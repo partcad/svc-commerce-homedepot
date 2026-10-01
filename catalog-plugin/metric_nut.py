@@ -20,7 +20,7 @@ from cq_warehouse.fastener import DomedCapNut, HexNut, HexNutWithFlange
 
 size = "M6-1"
 fastener_type = "iso4032"
-simple = True
+simple = False
 hand = "right"
 
 NUT_CLASSES = {
