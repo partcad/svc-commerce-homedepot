@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta, timezone
 import json
 import sys
+from urllib.parse import urlsplit
 
 import requests_cache
 from pyquery import PyQuery
@@ -90,7 +91,8 @@ def is_item_id(sku):
     states it as the SKU needs no lookup at all; anything else (a store SKU, a
     model number) is looked up on the website.
     """
-    return len(sku) == 9 and sku.isdigit()
+    # ASCII only: 'str.isdigit()' is true of superscripts and other scripts' digits.
+    return len(sku) == 9 and all("0" <= char <= "9" for char in sku)
 
 
 def _find_product_urls(node):
@@ -122,7 +124,8 @@ def _product_id_from_json_ld(response):
         except json.JSONDecodeError:
             continue
         for p_url in _find_product_urls(data):
-            product_id = p_url.rstrip("/").split("/")[-1]
+            # The path alone: a query or a fragment is not part of the item ID.
+            product_id = urlsplit(p_url).path.rstrip("/").split("/")[-1]
             if is_item_id(product_id):
                 return product_id
     return None
