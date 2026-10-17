@@ -24,6 +24,22 @@ docs:
             length: $length in
     ```
 
+    Its screws for wood are instances of one template too, `wood-screw`, drawn
+    from the sizes their product pages give: a screw's `tip` is put against the
+    place it goes in, and a connection's `drive` takes it in that far - which
+    is what the ports of `//pub/std/imperial/dimensional-lumber` take:
+
+    ```yaml
+    - part: //pub/svc/commerce/homedepot:screws/sdws22600db
+      connect:
+        name: apron
+        to: //pub/std/imperial/dimensional-lumber:cuboid
+        toPort: y0-x0
+        toParams: { fromEdge: 25.4, drive: 63.5 }
+        withPort: tip
+        how: { selfScrew: true }
+    ```
+
   usage: |
     Get an estimate for 4 mm-0.7 Zinc-Plated Metric Hex Nut:
 
@@ -79,6 +95,94 @@ parts:
     count_per_sku: 2
     url: https://www.homedepot.com/p/M4-0-7-x-20-mm-Class-8-8-Zinc-Plated-Hex-Bolt-2-Pack-801268/204273651
     type: step # This model is sourced from https://grabcad.com/library/hexagonal-bolt-m4-m5-m6-1
+
+  # Screws for wood.
+  #
+  # One generic template, 'wood-screw': a screw of any size, drawn by
+  # 'hardware/fasteners/screws/wood_screw.py' from the sizes a product page
+  # gives, in inches. It carries the vendor and no SKU, as the lumber templates
+  # below do, and each product is an instance of it with the SKU it is sold
+  # under and as many to the SKU as come in the box.
+  #
+  # A screw is drawn along Z, point down, with z = 0 the plane that is flush
+  # with the surface once it is driven home. Its two ports have +Z into the
+  # screw, as everywhere: 'tip' at the point, with +Z up the shank, which is
+  # what is put against the place the screw goes in, and 'head' where a
+  # driver's bit goes, with +Z down the shank.
+  wood-screw:
+    desc: A screw for wood, by its sizes (any size; see the products below for what is stocked)
+    type: cadquery
+    path: hardware/fasteners/screws/wood_screw.py
+    vendor: homedepot
+    parameters:
+      length:
+        type: float
+        desc: The length in inches - overall for a flat head, from under the head for a washer head
+        default: 2.0
+      diameter:
+        type: float
+        desc: The thread's major diameter in inches
+        default: 0.164
+      shank:
+        type: float
+        desc: The diameter of the plain shank between the head and the thread, in inches
+        default: 0.12
+      thread_length:
+        type: float
+        desc: The length of the thread in inches
+        default: 1.24
+      head:
+        type: string
+        desc: The kind of head - "flat" (countersunk, flush with the surface) or "washer" (on it)
+        enum: [flat, washer]
+        default: flat
+      head_diameter:
+        type: float
+        desc: The diameter of the head in inches
+        default: 0.31
+      head_height:
+        type: float
+        desc: How far a washer head stands above the surface, in inches
+        default: 0.0
+    ports:
+      tip: [[0, 0, "%-length * 25.4%"], [0, 0, 1], 0]
+      head: [[0, 0, "%head_height * 25.4 if head == 'washer' else 0%"], [1, 0, 0], 180]
+
+  screws/sdws22600db:
+    desc: Simpson Strong-Tie 0.220 in. x 6 in. T40 Washer Head Strong-Drive SDWS Timber Screw, Exterior Grade (12-Pack)
+    # https://www.homedepot.com/p/Simpson-Strong-Tie-0-220-in-x-6-in-T40-Washer-Head-Strong-Drive-SDWS-Timber-Screw-Exterior-Grade-12-Pack-SDWS22600DB-R12/321563353
+    # The sizes are the ones the retailers list for SDWS22600DB: a 3 in. thread
+    # and a 0.76 in. low-profile washer head.
+    type: enrich
+    source: wood-screw
+    with:
+      length: 6
+      diameter: 0.22
+      shank: 0.17
+      thread_length: 3
+      head: washer
+      head_diameter: 0.76
+      head_height: 0.12
+    vendor: homedepot
+    sku: "321563353"
+    count_per_sku: 12
+
+  screws/spax-8x2:
+    desc: "SPAX #8 x 2 in. T-Star Plus Drive Flat-Head Partial Thread Yellow Zinc Coated Multi-Material Screw (161-Box)"
+    # https://www.homedepot.com/p/202040969
+    # A #8 is 0.164 in. across the thread, which is 1.24 in. long.
+    type: enrich
+    source: wood-screw
+    with:
+      length: 2
+      diameter: 0.164
+      shank: 0.12
+      thread_length: 1.24
+      head: flat
+      head_diameter: 0.31
+    vendor: homedepot
+    sku: "202040969"
+    count_per_sku: 161
 
   # Dimensional lumber and plywood.
   #
