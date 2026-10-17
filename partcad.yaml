@@ -151,8 +151,12 @@ parts:
   screws/sdws22600db:
     desc: Simpson Strong-Tie 0.220 in. x 6 in. T40 Washer Head Strong-Drive SDWS Timber Screw, Exterior Grade (12-Pack)
     # https://www.homedepot.com/p/Simpson-Strong-Tie-0-220-in-x-6-in-T40-Washer-Head-Strong-Drive-SDWS-Timber-Screw-Exterior-Grade-12-Pack-SDWS22600DB-R12/321563353
-    # The sizes are the ones the retailers list for SDWS22600DB: a 3 in. thread
-    # and a 0.76 in. low-profile washer head.
+    # The 6 in. length, the 0.220 in. thread, its 3 in. length and the 0.76 in.
+    # low-profile washer head are what the retailers list for SDWS22600DB. The
+    # plain shank's 0.17 in. and the head's 0.12 in. height are not listed:
+    # they are estimates, drawn so that the shank is told from the thread and
+    # the head shows. Neither moves the screw's ports, so neither changes
+    # where it goes.
     type: enrich
     source: wood-screw
     with:
@@ -170,7 +174,8 @@ parts:
   screws/spax-8x2:
     desc: "SPAX #8 x 2 in. T-Star Plus Drive Flat-Head Partial Thread Yellow Zinc Coated Multi-Material Screw (161-Box)"
     # https://www.homedepot.com/p/202040969
-    # A #8 is 0.164 in. across the thread, which is 1.24 in. long.
+    # A #8 is 0.164 in. across the thread, which is 1.24 in. long. The plain
+    # shank's 0.12 in. and the head's 0.31 in. are estimates, as above.
     type: enrich
     source: wood-screw
     with:
