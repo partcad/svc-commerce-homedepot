@@ -37,6 +37,38 @@ manufacturing:
 ```
 
 
+## Screws for wood
+
+Screws are declared the way the lumber is: one generic template, `wood-screw`,
+drawn by `hardware/fasteners/screws/wood_screw.py` from the sizes a product page
+gives (in inches), with the vendor and **no SKU**; and each product an `enrich`
+of it at its sizes, with the SKU it is sold under and as many to the SKU as come
+in the box.
+
+| Part                  | Product                                                                                         | SKU       | In a box |
+|-----------------------|-------------------------------------------------------------------------------------------------|-----------|----------|
+| `screws/sdws22600db`  | Simpson Strong-Tie 0.220 in. x 6 in. T40 Washer Head Strong-Drive SDWS Timber Screw, Exterior Grade | 321563353 | 12       |
+| `screws/spax-8x2`     | SPAX #8 x 2 in. T-Star Plus Drive Flat-Head Partial Thread Yellow Zinc Coated Multi-Material Screw | 202040969 | 161      |
+
+A screw is drawn along Z, point down, with z = 0 the plane that is flush with
+the surface once it is driven home. Its `tip` port is what is put against the
+place it goes in, with +Z up the shank, and a connection's `drive` takes it in
+that far -- which is what the ports of
+[`//pub/std/imperial/dimensional-lumber`](https://github.com/partcad/partcad-standard-imperial-dimensional-lumber)
+take, in from an edge (`fromEdge`) and into the board (`drive`):
+
+```yaml
+- part: //pub/svc/commerce/homedepot:screws/sdws22600db
+  connect:
+    name: apron
+    to: //pub/std/imperial/dimensional-lumber:cuboid
+    toPort: y0-x0
+    toParams: { fromEdge: 25.4, drive: 63.5 }
+    withPort: tip
+    how: { selfScrew: true }
+```
+
+
 ## Usage
 Get an estimate for a hex nut:
 
