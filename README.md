@@ -7,34 +7,42 @@ Placing orders is not implemented yet.
 
 ## Dimensional lumber
 
-Lumber and plywood are declared as instances of the standard sizes in
-[`//pub/std/imperial/dimensional-lumber`](https://github.com/partcad/partcad-standard-imperial-dimensional-lumber).
-Two generic templates, `dimensional-lumber` and `plywood`, are the store's
-products of any size: parametric, with the vendor and **no SKU**, since there is
-nothing to order until a size is chosen. Each stocked product is an `enrich` of
-a template at its nominal size, with the SKU it is sold under. The geometry is
-the standard's, in its frame (width along X, length along Y, thickness along Z).
+Lumber and plywood are published as aliases of the sizes the standard names in
+[`//pub/std/imperial/dimensional-lumber/stock`](https://github.com/partcad/partcad-standard-imperial-dimensional-lumber),
+each with the SKU it is sold under. The geometry is the standard's, in its frame
+(width along X, length along Y, thickness along Z).
 
-| Part                        | Product                                                   | SKU         |
-|-----------------------------|-----------------------------------------------------------|-------------|
-| `lumber/2x4x8`              | 2 in. x 4 in. x 8 ft. #2 Premium Grade Fir                | 202094172   |
-| `lumber/2x4x20`             | 2 in. x 4 in. x 20 ft. #2 Premium Grade Hem-Fir           | 202083072   |
-| `lumber/2x6x8`              | 2 in. x 6 in. x 8 ft. #2 Premium Grade Fir                | 100026460   |
-| `lumber/4x4x8`              | 4 in. x 4 in. x 8 ft. #2 Premium Grade Fir                | 202094374   |
-| `plywood/23-32x4x8`         | 23/32 in. x 4 ft. x 8 ft. BC Sanded Pine Plywood          | 100061386   |
+| Part                        | Product                                                   | Standard size      | SKU         |
+|-----------------------------|-----------------------------------------------------------|--------------------|-------------|
+| `lumber/2x4x8`              | 2 in. x 4 in. x 8 ft. #2 Premium Grade Fir                | `lumber/2x4x8`     | 202094172   |
+| `lumber/2x4x20`             | 2 in. x 4 in. x 20 ft. #2 Premium Grade Hem-Fir           | `lumber/2x4x20`    | 202083072   |
+| `lumber/2x6x8`              | 2 in. x 6 in. x 8 ft. #2 Premium Grade Fir                | `lumber/2x6x8`     | 100026460   |
+| `lumber/4x4x8`              | 4 in. x 4 in. x 8 ft. #2 Premium Grade Fir                | `lumber/4x4x8`     | 202094374   |
+| `plywood/23-32x4x8`         | 23/32 in. x 4 ft. x 8 ft. BC Sanded Pine Plywood          | `plywood/3-4x4x8`  | 100061386   |
 
-A part cut to size from one of them names it as its stock, in the same
-coordinates:
+A part cut to size names the standard size as its stock, and lists this store
+among its package's `suppliers:`. Being an alias of that size is what makes this
+store a place to buy it, and any other store that publishes an alias of the same
+size is one too (Lowe's does), so the part is bought from whichever of them is
+asked:
 
 ```yaml
 manufacturing:
   method: subtractive
-  source: //pub/svc/commerce/homedepot:lumber/4x4x8
+  source: //pub/std/imperial/dimensional-lumber/stock:lumber/4x4x8
   cut:
     cuts:
       - along: +Y
         length: $length in
 ```
+
+Naming the product here instead (`//pub/svc/commerce/homedepot:lumber/4x4x8`)
+still works, and buys it here first. Being bought through an alias needs PartCAD
+0.9.25 or later.
+
+The generic templates `dimensional-lumber` and `plywood` are still here: the
+store's products of any size, with the vendor and **no SKU**, since there is
+nothing to order until a size is chosen.
 
 
 ## Screws for wood
