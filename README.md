@@ -38,7 +38,7 @@ manufacturing:
 
 Naming the product here instead (`//pub/svc/commerce/homedepot:lumber/4x4x8`)
 still works, and buys it here first. Being bought through an alias needs PartCAD
-0.10.7 or later.
+0.10.8 or later.
 
 The generic templates `dimensional-lumber` and `plywood` are still here: the
 store's products of any size, with the vendor and **no SKU**, since there is
